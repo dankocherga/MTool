@@ -5,18 +5,18 @@ Mtool is a magento code-genarator which should help magento-developers with thei
 
 Installation
 ------------
-Installation instructions for linux systems
-1.  Download ZF (minimal package at http://framework.zend.com/download/latest)
-2.  Extract ZF archive somewhere like ~/lib/ZendFramework
-3.  Create symbolic link to ZF: ln -s ~/lib/ZendFramework/bin/zf.sh /usr/local/bin/zf
-4.  Execute "zf --help"  and ensure it works
-5.  Download mtool archive
-6.  Extract it to the ZF library directory ~/lib/ZendFramework/library
-7.  Under the home directory create file ~/.zf
-8.  Paste the following 2 lines inside:
+Installation instructions for linux systems:
+1. Download ZF (minimal package at http://framework.zend.com/download/latest)
+2. Extract ZF archive somewhere like ~/lib/ZendFramework
+3. Create symbolic link to ZF: ln -s ~/lib/ZendFramework/bin/zf.sh /usr/local/bin/zf
+4. Execute "zf --help"  and ensure it works
+5. Download mtool archive
+6. Extract it to the ZF library directory ~/lib/ZendFramework/library
+7. Under the home directory create file ~/.zf
+8. Paste the following 2 lines inside:
     php.include_path = ".:~/lib/ZendFramework/library:/usr/bin/pear"
     basicloader.classes.1 = "MtoolManifest"
-9.  Execute "zf test mtool" to ensure it works
+9. Execute "zf test mtool" to ensure it works
 
 Documentation
 -------------
