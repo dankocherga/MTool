@@ -1,6 +1,4 @@
 <?php 
-require_once 'Mtool/Codegen/Exception/Filesystem.php';
-
 /**
  * Filesystem stuff class
  *

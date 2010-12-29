@@ -1,7 +1,4 @@
 <?php 
-require_once 'Mtool/Codegen/Filesystem.php';
-require_once 'Mtool/Codegen/Exception/Config.php';
-
 /**
  * Config writer
  *
@@ -30,7 +27,7 @@ class Mtool_Codegen_Config
 	public function __construct($filepath)
 	{
 		if(!Mtool_Codegen_Filesystem::exists($filepath))
-			throw new Codegen_Exception_Config("Config file does not exist: {$filepath}");
+			throw new Mtool_Codegen_Exception_Config("Config file does not exist: {$filepath}");
 
 		$this->_xml = simplexml_load_file($filepath); 
 		if($this->_xml === false)

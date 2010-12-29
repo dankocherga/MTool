@@ -1,5 +1,4 @@
 <?php 
-require_once 'Mtool/Codegen/Entity/Abstract.php';
 /**
  * Helper code generator
  *
@@ -7,7 +6,7 @@ require_once 'Mtool/Codegen/Entity/Abstract.php';
  * @package    Codegen
  * @author     Kocherga Daniel @ oggetto web
  */
-class Mtool_Codegen_Entity_Helper extends MTool_Codegen_Entity_Abstract
+class Mtool_Codegen_Entity_Helper extends Mtool_Codegen_Entity_Abstract
 {
 	/**
 	 * Entity folder name

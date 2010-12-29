@@ -1,6 +1,4 @@
 <?php 
-require_once 'Mtool/Codegen/Entity/Module.php';
-require_once 'Mtool/Providers/Abstract.php';
 /**
  * Mage entity provider
  *

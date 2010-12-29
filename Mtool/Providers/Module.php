@@ -1,6 +1,4 @@
 <?php 
-require_once 'Mtool/Providers/Abstract.php';
-require_once 'Mtool/Codegen/Entity/Module.php';
 /**
  * Module provider
  *

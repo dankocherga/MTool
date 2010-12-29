@@ -1,6 +1,4 @@
 <?php 
-require_once 'Mtool/Magento.php';
-require_once 'Mtool/Codegen/Template.php';
 /**
  * Module code generator
  *

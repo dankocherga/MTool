@@ -1,5 +1,4 @@
 <?php 
-require_once 'Mtool/Codegen/Entity/Block.php';
 /**
  * Block provider
  *

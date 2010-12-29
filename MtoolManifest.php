@@ -1,11 +1,4 @@
 <?php
-require_once 'Mtool/Providers/Entity.php';
-require_once 'Mtool/Providers/Mtool.php';
-require_once 'Mtool/Providers/Module.php';
-require_once 'Mtool/Providers/Model.php';
-require_once 'Mtool/Providers/Rmodel.php';
-require_once 'Mtool/Providers/Block.php';
-require_once 'Mtool/Providers/Helper.php';
 /**
  * Mage tool manifest
  *
@@ -15,6 +8,15 @@ require_once 'Mtool/Providers/Helper.php';
  */
 class MtoolManifest implements Zend_Tool_Framework_Manifest_ProviderManifestable
 {
+	/**
+	 * Register autoload for the tool
+	 */
+	public function __construct()
+	{
+		$autoloader = Zend_Loader_Autoloader::getInstance();
+		$autoloader->registerNamespace('Mtool_');
+	}
+
     /**
      * Get available providers
      * @return array

@@ -1,5 +1,4 @@
 <?php 
-require_once 'Mtool/Codegen/Entity/Model.php';
 /**
  * Resource model code generator
  *
@@ -7,7 +6,7 @@ require_once 'Mtool/Codegen/Entity/Model.php';
  * @package    Codegen
  * @author     Kocherga Daniel @ oggetto web
  */
-class Mtool_Codegen_Entity_Rmodel extends MTool_Codegen_Entity_Model
+class Mtool_Codegen_Entity_Rmodel extends Mtool_Codegen_Entity_Model
 {
 	/**
 	 * Rewrite resource model

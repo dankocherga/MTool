@@ -1,5 +1,4 @@
 <?php 
-require_once 'Mtool/Codegen/Entity/Model.php';
 /**
  * Model provider
  *

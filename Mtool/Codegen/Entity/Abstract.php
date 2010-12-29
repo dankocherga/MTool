@@ -1,9 +1,4 @@
 <?php 
-require_once 'Mtool/Codegen/Exception/Entity.php';
-require_once 'Mtool/Codegen/Filesystem.php';
-require_once 'Mtool/Codegen/Template.php';
-require_once 'Mtool/Codegen/Config.php';
-
 /**
  * Abstract code generator
  *

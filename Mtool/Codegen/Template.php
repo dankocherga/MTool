@@ -1,7 +1,4 @@
 <?php 
-require_once 'Mtool/Codegen/Filesystem.php';
-require_once 'Mtool/Codegen/Parser.php';
-
 /**
  * File template class
  *
