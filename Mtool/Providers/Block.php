@@ -14,7 +14,7 @@ class Mtool_Providers_Block extends Mtool_Providers_Entity
 	 */
 	public function getName()
 	{
-		return 'mage_block';
+		return 'mage-block';
 	}
 
 	/**

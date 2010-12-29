@@ -14,7 +14,7 @@ class Mtool_Providers_Helper extends Mtool_Providers_Entity
 	 */
 	public function getName()
 	{
-		return 'mage_helper';
+		return 'mage-helper';
 	}
 
 	/**

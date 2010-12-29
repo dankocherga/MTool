@@ -14,7 +14,7 @@ class Mtool_Providers_Model extends Mtool_Providers_Entity
 	 */
 	public function getName()
 	{
-		return 'mage_model';
+		return 'mage-model';
 	}
 
 	/**

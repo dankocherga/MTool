@@ -14,7 +14,7 @@ class Mtool_Providers_Module extends Mtool_Providers_Abstract
 	 */
 	public function getName()
 	{
-		return 'mage_module';
+		return 'mage-module';
 	}
 
 	/**
