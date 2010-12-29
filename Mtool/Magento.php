@@ -1,5 +1,6 @@
 <?php
 require_once 'Mtool/Codegen/Filesystem.php';
+require_once 'Mtool/Codegen/Browser.php';
 
 /**
  * Magento configuration class
@@ -53,5 +54,16 @@ class Mtool_Magento
 			DIRECTORY_SEPARATOR . 'etc' . 
 			DIRECTORY_SEPARATOR . 'modules' . 
 			DIRECTORY_SEPARATOR;
+	}
+
+	/**
+	 * Find file in the code pools
+	 * 
+	 * @param string $search 
+	 * @return RegexIterator
+	 */
+	public function findInCode($search)
+	{
+		return Mtool_Codegen_Browser::find($search, $this->_root . 'app' . DIRECTORY_SEPARATOR . 'code');
 	}
 }

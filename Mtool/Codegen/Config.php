@@ -34,7 +34,7 @@ class Mtool_Codegen_Config
 
 		$this->_xml = simplexml_load_file($filepath); 
 		if($this->_xml === false)
-			throw new Codegen_Exception_Config("Cannot load config file: {$filepath}");
+			throw new Mtool_Codegen_Exception_Config("Cannot load config file: {$filepath}");
 
 		$this->_path = $filepath;
 	}
@@ -102,5 +102,21 @@ class Mtool_Codegen_Config
 			   $string .=  str_repeat("\t", $currIndent) . $element . "\n";
 		}
 		return $string;
+	}
+
+	/**
+	 * Read the config value
+	 *
+	 * @param string $path
+	 * @return string
+	 */
+	public function get($path)
+	{
+		$node = $this->_xml;
+		foreach(explode('/', $path) as $_segment)
+			if($node->$_segment)
+				$node = $node->$_segment;
+
+		return (string) trim($node);
 	}
 }

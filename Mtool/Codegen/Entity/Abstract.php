@@ -1,4 +1,5 @@
 <?php 
+require_once 'Mtool/Codegen/Exception/Entity.php';
 require_once 'Mtool/Codegen/Filesystem.php';
 require_once 'Mtool/Codegen/Template.php';
 require_once 'Mtool/Codegen/Config.php';
@@ -60,7 +61,7 @@ abstract class Mtool_Codegen_Entity_Abstract
 	}
 
 	/**
-	 * Rewrite Magento entity
+	 * Rewrite entity
 	 * 
 	 * @param string $originNamespace 
 	 * @param string $originPath 
@@ -69,18 +70,46 @@ abstract class Mtool_Codegen_Entity_Abstract
 	 */
 	public function rewrite($originNamespace, $originPath, $path, Mtool_Codegen_Entity_Module $module)
 	{
+		// Find origin class prefix
+		$classPrefix = $this->_lookupOriginEntityClass($originNamespace, $module->findThroughModules('config.xml'));
+
 		// Create own class
 		$originPathSteps = $this->_ucPath(explode('_', $originPath));
-		$originModuleName = ucfirst($originNamespace);
 		$originClassName = implode('_', $originPathSteps);
 		$params = array(
-			'original_class_name' => "Mage_{$originModuleName}_{$this->_entityName}_{$originClassName}"
+			'original_class_name' => "{$classPrefix}_{$originClassName}"
 		);
 		$className = $this->createClass($path, $this->_rewriteTemplate, $module, $params);
 
-		// Register rewrite in config
+		//Register rewrite in config
 		$config = new Mtool_Codegen_Config($module->getConfigPath('config.xml'));
 		$config->set("global/{$this->_configNamespace}/{$originNamespace}/rewrite/{$originPath}", $className);
+	}
+
+	/**
+	 * Lookup the class definition among the project
+	 * modules
+	 * 
+	 * @param string $namespace 
+	 * @param string $namespace 
+	 * @param string $field 
+	 * @return string (like Mage_Catalog_Model)
+	 */
+	protected function _lookupOriginEntityClass($namespace, $configs, $field = 'class')
+	{
+		foreach($configs as $_config)
+		{
+			try
+			{
+				$config = new Mtool_Codegen_Config(@$_config[0]);
+				if($prefix = $config->get("global/{$this->_configNamespace}/{$namespace}/{$field}"))
+					return $prefix;
+			}
+			catch(Exception $e)
+			{}
+		}
+
+		throw new Mtool_Codegen_Exception_Entity("Module with namespace {$namespace} not found");
 	}
 
 	/**

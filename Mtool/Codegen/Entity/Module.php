@@ -68,8 +68,6 @@ class Mtool_Codegen_Entity_Module
 	 */
 	public function createDummy()
 	{
-		//TODO add initialization check
-
 		// Check that module does not already exist
 		if($this->exists())
 			throw new Mtool_Codegen_Exception_Filesystem(
@@ -147,5 +145,16 @@ class Mtool_Codegen_Entity_Module
 	public function getModuleName()
 	{
 		return $this->_moduleName;
+	}
+
+	/**
+	 * Find file through modules
+	 * 
+	 * @param string $search 
+	 * @return RegexIterator
+	 */
+	public function findThroughModules($search)
+	{
+		return $this->_mage->findInCode($search);
 	}
 }
