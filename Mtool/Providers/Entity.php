@@ -35,6 +35,31 @@ class Mtool_Providers_Entity
 	}
 
 	/**
+	 * Create entity with target module autoguessing
+	 *
+	 * @param Mtool_Codegen_Entity_Abstract $entity
+	 * @param string $name
+	 * @param string $entityPath in format of mymodule/model_path
+	 */
+	protected function _createEntityWithAutoguess($entity, $name, $entityPath = null)
+	{
+		if($entityPath == null)
+			$entityPath = $this->_ask("Enter the {$name} path (in format of mymodule/{$name}_path)");
+		list($namespace, $entityName) = explode('/', $entityPath);
+
+		$module = Mtool_Codegen_Entity_Module_Finder::byNamespace(getcwd(), $entity, $namespace);
+		if($module == null)
+		{
+			$targetModule = $this->_ask("Unfortunately module with {$name} namespace '{$namespace}' was not found. Enter the target module (in format of Mycompany/Mymodule)");
+			list($companyName, $moduleName) = explode('/', $targetModule);
+			$module = new Mtool_Codegen_Entity_Module(getcwd(), $moduleName, $companyName);
+		}
+
+		$entity->create($namespace, $entityName, $module);
+		$this->_answer("New {$name} created under {$module->getName()} module");
+	}
+
+	/**
 	 * Rewrite entity
 	 *
 	 * @param Mtool_Codegen_Entity_Abstract $entity

@@ -57,10 +57,13 @@ class Mtool_Magento
 	 * Find file in the code pools
 	 * 
 	 * @param string $search 
+	 * @param string|null $where
 	 * @return RegexIterator
 	 */
-	public function findInCode($search)
+	public function findInCode($search, $where = null)
 	{
-		return Mtool_Codegen_Browser::find($search, $this->_root . 'app' . DIRECTORY_SEPARATOR . 'code');
+		if($where === null)
+			$where = $this->_root . 'app' . DIRECTORY_SEPARATOR . 'code';
+		return Mtool_Codegen_Browser::find($search, $where);
 	}
 }

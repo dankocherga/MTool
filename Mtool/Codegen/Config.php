@@ -26,12 +26,18 @@ class Mtool_Codegen_Config
 	 */
 	public function __construct($filepath)
 	{
+		libxml_use_internal_errors(true);
 		if(!Mtool_Codegen_Filesystem::exists($filepath))
 			throw new Mtool_Codegen_Exception_Config("Config file does not exist: {$filepath}");
 
 		$this->_xml = simplexml_load_file($filepath); 
 		if($this->_xml === false)
-			throw new Mtool_Codegen_Exception_Config("Cannot load config file: {$filepath}");
+		{
+			$message = "Cannot load config file: {$filepath}";
+			foreach(libxml_get_errors() as $_error)
+				$message .= "; {$_error->message}";
+			throw new Mtool_Codegen_Exception_Config($message);
+		}
 
 		$this->_path = $filepath;
 	}

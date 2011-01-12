@@ -29,6 +29,15 @@ class Mtool_Providers_Helper extends Mtool_Providers_Entity
 	}
 
 	/**
+	 * Create new helper with module auto-guessing
+	 * @param string $helperPath in format of mymodule/helper_path
+	 */
+	public function add($helperPath = null)
+	{
+		$this->_createEntityWithAutoguess(new Mtool_Codegen_Entity_Helper(), 'helper', $helperPath);
+	}
+
+	/**
 	 * Rewrite helper
 	 *
 	 * @param string $targetModule in format of companyname/modulename

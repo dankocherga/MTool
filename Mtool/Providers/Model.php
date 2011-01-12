@@ -29,6 +29,15 @@ class Mtool_Providers_Model extends Mtool_Providers_Entity
 	}
 
 	/**
+	 * Create new model with module auto-guessing
+	 * @param string $modelPath in format of mymodule/model_path
+	 */
+	public function add($modelPath = null)
+	{
+		$this->_createEntityWithAutoguess(new Mtool_Codegen_Entity_Model(), 'model', $modelPath);
+	}
+
+	/**
 	 * Rewrite model
 	 *
 	 * @param string $targetModule in format of companyname/modulename

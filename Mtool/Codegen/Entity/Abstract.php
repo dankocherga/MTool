@@ -39,6 +39,15 @@ abstract class Mtool_Codegen_Entity_Abstract
 	protected $_configNamespace;
 
 	/**
+	 * Get entity config namespace
+	 * @return string
+	 */
+	public function getConfigNamespace()
+	{
+		return $this->_configNamespace;
+	}
+
+	/**
 	 * Create new entity
 	 * 
 	 * @param string $namespace 
@@ -50,9 +59,11 @@ abstract class Mtool_Codegen_Entity_Abstract
 		// Create class file
 		$this->createClass($path, $this->_createTemplate, $module);
 
-		// Create namespace in config
+		// Create namespace in config if not exist
 		$config = new Mtool_Codegen_Config($module->getConfigPath('config.xml'));
-		$config->set("global/{$this->_configNamespace}/{$namespace}/class", "{$module->getName()}_{$this->_entityName}");
+		$configPath = "global/{$this->_configNamespace}/{$namespace}/class";
+		if(!$config->get($configPath))
+			$config->set($configPath, "{$module->getName()}_{$this->_entityName}");
 	}
 
 	/**
@@ -66,7 +77,7 @@ abstract class Mtool_Codegen_Entity_Abstract
 	public function rewrite($originNamespace, $originPath, $path, Mtool_Codegen_Entity_Module $module)
 	{
 		// Find origin class prefix
-		$classPrefix = $this->_lookupOriginEntityClass($originNamespace, $module->findThroughModules('config.xml'));
+		$classPrefix = $this->lookupOriginEntityClass($originNamespace, $module->findThroughModules('config.xml'));
 
 		// Create own class
 		$originPathSteps = $this->_ucPath(explode('_', $originPath));
@@ -86,11 +97,11 @@ abstract class Mtool_Codegen_Entity_Abstract
 	 * modules
 	 * 
 	 * @param string $namespace 
-	 * @param string $namespace 
+	 * @param RegexIterator $configs 
 	 * @param string $field 
 	 * @return string (like Mage_Catalog_Model)
 	 */
-	protected function _lookupOriginEntityClass($namespace, $configs, $field = 'class')
+	public function lookupOriginEntityClass($namespace, $configs, $field = 'class')
 	{
 		foreach($configs as $_config)
 		{

@@ -29,6 +29,15 @@ class Mtool_Providers_Block extends Mtool_Providers_Entity
 	}
 
 	/**
+	 * Create new block with module auto-guessing
+	 * @param string $blockPath in format of mymodule/block_path
+	 */
+	public function add($blockPath = null)
+	{
+		$this->_createEntityWithAutoguess(new Mtool_Codegen_Entity_Block(), 'block', $blockPath);
+	}
+
+	/**
 	 * Rewrite block
 	 *
 	 * @param string $targetModule in format of companyname/modulename

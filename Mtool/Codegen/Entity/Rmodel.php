@@ -19,8 +19,8 @@ class Mtool_Codegen_Entity_Rmodel extends Mtool_Codegen_Entity_Model
 	public function rewrite($originNamespace, $originPath, $path, Mtool_Codegen_Entity_Module $module)
 	{
 		// Find origin class prefix
-		$resourceModel = $this->_lookupOriginEntityClass($originNamespace, $module->findThroughModules('config.xml'), 'resourceModel');
-		$classPrefix = $this->_lookupOriginEntityClass($resourceModel, $module->findThroughModules('config.xml'));
+		$resourceModel = $this->lookupOriginEntityClass($originNamespace, $module->findThroughModules('config.xml'), 'resourceModel');
+		$classPrefix = $this->lookupOriginEntityClass($resourceModel, $module->findThroughModules('config.xml'));
 
 		// Create own class
 		$originPathSteps = $this->_ucPath(explode('_', $originPath));
