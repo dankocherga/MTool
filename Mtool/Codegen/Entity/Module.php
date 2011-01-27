@@ -40,6 +40,12 @@ class Mtool_Codegen_Entity_Module
 	protected $_moduleConfigsDir;
 
 	/**
+	 * Module sql dir path
+	 * @var string
+	 */
+	protected $_moduleSqlDir;
+
+	/**
 	 * Init environemnt
 	 * 
 	 * @param string $root absolute path to magento root
@@ -56,6 +62,7 @@ class Mtool_Codegen_Entity_Module
 			DIRECTORY_SEPARATOR . 
 			$this->_moduleName; 
 		$this->_moduleConfigsDir = $this->_moduleDir . DIRECTORY_SEPARATOR . 'etc';
+		$this->_moduleSqlDir = $this->_moduleDir . DIRECTORY_SEPARATOR . 'sql';
 	}
 
 	/**
@@ -68,7 +75,7 @@ class Mtool_Codegen_Entity_Module
 	{
 		// Check that module does not already exist
 		if($this->exists())
-			throw new Mtool_Codegen_Exception_Filesystem(
+			throw new Mtool_Codegen_Exception_Module(
 				"Seems like this module already exists. Aborting.");
 
 		// Create module dir
@@ -85,6 +92,38 @@ class Mtool_Codegen_Entity_Module
 			->setParams(array('module_name' => $name))
 			->move($this->_mage->getModulesConfigPath(), "{$name}.xml");
 	}
+
+    /**
+     * Create module installer:
+     * 1. create version entry in the config
+     * 2. create setup resource entry in config
+     * 3. create installer file under module sql directory
+     * 
+     * @param string $version - initial version in format 1.0.0
+     */
+    public function install($version)
+    {
+        if(!$this->exists())
+			throw new Mtool_Codegen_Exception_Module(
+				"Seems like this module does not exist. Aborting.");
+
+		$config = new Mtool_Codegen_Config($this->getConfigPath('config.xml'));
+
+        // Create version entry in config
+        $config->set("modules/{$this->getName()}/version", $version);
+
+        // Create setup resource entry in config
+        $setupNamspace = strtolower($this->getName()) . '_setup';
+        $config->set("global/resources/{$setupNamspace}/setup/module", $this->getName());
+        $config->set("global/resources/{$setupNamspace}/setup/connection", 'core_setup');
+
+        // Create installer file
+		$modulesTemplate = new Mtool_Codegen_Template('module_installer');
+		$modulesTemplate
+			->setParams(array('company_name' => $this->_companyName, 'module_name' => $this->_moduleName))
+			->move($this->_moduleSqlDir . DIRECTORY_SEPARATOR . $setupNamspace , "mysql4-install-{$version}.php");
+    }
+
 
 	/**
 	 * Check if module exists
