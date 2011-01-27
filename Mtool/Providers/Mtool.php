@@ -7,8 +7,14 @@
  * @author     Kocherga Daniel @ oggetto web
  */
 class Mtool_Providers_Mtool
-    extends Zend_Tool_Framework_Provider_Abstract
+    extends Mtool_Providers_Abstract
 {
+    /**
+     * Mage tool version
+     * @var string
+     */
+    protected $_version = '1.5.0';
+
 	/**
 	 * Get provider name
 	 * @return string
@@ -21,8 +27,8 @@ class Mtool_Providers_Mtool
     /**
      * Check mtool working
      */
-    public function test()
+    public function info()
     {
-    	echo 'Mtool is working. Wiii!';
+        $this->_answer("Magento Command Line Console Tool v{$this->_version}");
     }
 }
