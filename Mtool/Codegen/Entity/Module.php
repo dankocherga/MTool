@@ -8,6 +8,12 @@
  */
 class Mtool_Codegen_Entity_Module
 {
+    /*
+     * Upgrade modes
+     */
+    const UPGRADE_MODE_EXACT     = 'to';
+    const UPGRADE_MODE_INCREMENT = 'inc';
+
 	/**
 	 * Magento configuration class
 	 * 
@@ -122,6 +128,63 @@ class Mtool_Codegen_Entity_Module
 		$modulesTemplate
 			->setParams(array('company_name' => $this->_companyName, 'module_name' => $this->_moduleName))
 			->move($this->_moduleSqlDir . DIRECTORY_SEPARATOR . $setupNamspace , "mysql4-install-{$version}.php");
+    }
+
+    /**
+     * Upgrade magento module
+     * 
+     * @param string $mode - see mode constants
+     * @param string $versionRequest - exact version or a mask depending on mode
+     */
+    public function upgrade($mode, $versionRequest)
+    {
+        if(!$this->exists())
+			throw new Mtool_Codegen_Exception_Module(
+				"Seems like this module does not exist. Aborting.");
+
+		$config = new Mtool_Codegen_Config($this->getConfigPath('config.xml'));
+
+        // Define version value
+        $currentVersion = $config->get("modules/{$this->getName()}/version");
+        switch($mode)
+        {
+            case self::UPGRADE_MODE_EXACT:
+                $version = $versionRequest;
+                break;
+            case self::UPGRADE_MODE_INCREMENT:
+                $version = $this->_forceVersion($currentVersion, $versionRequest);
+                break;
+            default:
+                throw new Mtool_Codegen_Exception_Module(
+                    "Undefined version upgrade type: {$mode}");
+        }
+        $config->set("modules/{$this->getName()}/version", $version);
+
+        // Create upgrade file
+        $setupNamspace = strtolower($this->getName()) . '_setup';
+		$modulesTemplate = new Mtool_Codegen_Template('module_upgrader');
+		$modulesTemplate
+			->setParams(array('company_name' => $this->_companyName, 'module_name' => $this->_moduleName))
+			->move($this->_moduleSqlDir . DIRECTORY_SEPARATOR . $setupNamspace , "mysql4-upgrade-{$currentVersion}-{$version}.php");
+    }
+
+    /**
+     * Force version with increment by mask
+     * 
+     * @param string $version input value 
+     * @param string $mask in format of *.*.1 
+     *  where * means same value as in input
+     * @return string
+     */
+    protected function _forceVersion($version, $mask)
+    {
+        $maskSegments = explode('.', $mask);
+        $versionSegments = explode('.', $version);
+        foreach($versionSegments as $_index => &$_segment)
+            if(isset($maskSegments[$_index]) && $maskSegments[$_index] != '*')
+                $_segment += $maskSegments[$_index];
+
+        return implode('.', $versionSegments);
     }
 
 

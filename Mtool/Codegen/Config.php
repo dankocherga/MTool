@@ -54,12 +54,12 @@ class Mtool_Codegen_Config
 		$node = $this->_xml;
 		foreach($segments as $_key => $_segment)
 		{
-			if($_key == count($segments) - 1)
-				$nodeValue = $value;
-			else $nodeValue = null;
-
 			if(!$node->$_segment->getName())
-				$node->addChild($_segment, $nodeValue);
+				$node->addChild($_segment);
+            
+            if($_key == count($segments) - 1)
+                $node->$_segment = $value;
+
 			$node = $node->$_segment;
 		}
 

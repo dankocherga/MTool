@@ -13,7 +13,7 @@ class Mtool_Providers_Mtool
      * Mage tool version
      * @var string
      */
-    protected $_version = '1.5.0';
+    protected $_version = '1.0.0';
 
 	/**
 	 * Get provider name

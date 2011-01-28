@@ -55,4 +55,30 @@ class Mtool_Providers_Module extends Mtool_Providers_Abstract
         $module->install($version);
         $this->_answer('Done');
     }
+
+    public function upgrade($name = null, $mode = null, $version = null)
+    {
+        if($name == null)
+			$name = $this->_ask('Enter the target module (like mycompany/mymodule)');
+        if($mode == null)
+            $mode = $this->_ask('How to upgrade - to exact version or increment existing? (enter "' . 
+                Mtool_Codegen_Entity_Module::UPGRADE_MODE_EXACT . '" or "' . 
+                Mtool_Codegen_Entity_Module::UPGRADE_MODE_INCREMENT . '")');
+        if($version == null)
+            switch($mode)
+            {
+                case Mtool_Codegen_Entity_Module::UPGRADE_MODE_EXACT: 
+                    $version = $this->_ask('Enter the module version (like 1.0.0)');
+                    break;
+                case Mtool_Codegen_Entity_Module::UPGRADE_MODE_INCREMENT: 
+                    $version = $this->_ask('Enter the increment mask (like *.*.1 , * means same value as now)');
+                    break;
+            }
+
+        list($companyName, $moduleName) = explode('/', $name);
+		$module = new Mtool_Codegen_Entity_Module(getcwd(), $moduleName, $companyName);
+
+        $module->upgrade($mode, $version);
+        $this->_answer('Done');
+    }
 }
