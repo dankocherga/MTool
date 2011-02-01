@@ -85,6 +85,7 @@ class Mtool_Codegen_Config
 		// holds indentation
 		$currIndent = 0;
 		
+        $indent = "    ";
 		// set xml element first by shifting of initial element
 		$string = array_shift($xmlArray) . "\n";
 		foreach($xmlArray as $element) 
@@ -93,16 +94,16 @@ class Mtool_Codegen_Config
 			// increment currIndent
 			if (preg_match('/^<([\w])+[^>\/]*>$/U',$element)) 
 			{
-			   $string .=  str_repeat("\t", $currIndent) . $element . "\n";
+			   $string .=  str_repeat($indent, $currIndent) . $element . "\n";
 			   $currIndent += 1;
 			} // find standalone closures, decrement currindent, print to string
 			elseif ( preg_match('/^<\/.+>$/',$element)) 
 			{
 			   $currIndent -= 1;
-			   $string .=  str_repeat("\t", $currIndent) . $element . "\n";
+			   $string .=  str_repeat($indent, $currIndent) . $element . "\n";
 			} // find open/closed tags on the same line print to string
 			else
-			   $string .=  str_repeat("\t", $currIndent) . $element . "\n";
+			   $string .=  str_repeat($indent, $currIndent) . $element . "\n";
 		}
 		return $string;
 	}
