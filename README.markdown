@@ -5,4 +5,5 @@ Mtool is a magento code-genarator which should help magento-developers with thei
 
 Documentation
 ------------
-Here in English: https://docs.google.com/document/pub?id=1ClS9yAArBAkZDwy15kW3527GBqtyhiKNjwuaTwjYhKs
+See in the wiki: 
+https://github.com/dankocherga/MTool/wiki/quick-install
