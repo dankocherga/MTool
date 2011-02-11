@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Abstract code generator
  *
@@ -9,29 +10,30 @@
 abstract class Mtool_Codegen_Entity_Abstract
 {
     /**
+     * Config file name
+     */
+    const CONFIG_FILE_NAME = '.mtool.ini';
+
+    /**
      * Entity folder name
      * @var string
      */
     protected $_folderName;
-
     /**
      * Create template name
      * @var string
      */
     protected $_createTemplate;
-
     /**
      * Rewrite template name
      * @var string
      */
     protected $_rewriteTemplate;
-
     /**
      * Entity name
      * @var string
      */
     protected $_entityName;
-
     /**
      * Namespace in config file
      * @var string
@@ -39,14 +41,83 @@ abstract class Mtool_Codegen_Entity_Abstract
     protected $_configNamespace;
 
     /**
+     * Get params from config file
+     *
+     * @throws Mtool_Codegen_Exception_Filesystem
+     * @return array
+     */
+    private function _getConfig()
+    {
+        $configFile = Mtool_Magento::$homeDir . DIRECTORY_SEPARATOR . self::CONFIG_FILE_NAME;
+        // create config file if it's not exists
+        if (!file_exists($configFile)) {
+            if (!$handle = fopen($configFile, 'a+')) {
+                throw new Mtool_Codegen_Exception_Filesystem(
+                    "Cannot create config file {$configFile}.  Maybe permissions problem?"
+                );
+            }
+            fclose($handle);
+        }
+
+        $iniConfig = new Zend_Config_Ini($configFile, null, array('allowModifications' => true));
+        if (is_null($iniConfig->projects)) {
+            // @todo ask user about configs and create config file
+            // no 'projects' in the config file
+            throw new Mtool_Codegen_Exception_Filesystem(
+                "Cannot find config data for this project in the {$configFile}"
+            );
+        } else {
+            $projectConfigId = null;
+            // find id of current project
+            foreach ($iniConfig->projects->toArray() as $key => $_projectConfig) {
+                if (is_array($_projectConfig)) {
+                    if ((isset($_projectConfig['path']))
+                         && ($_projectConfig['path'] == Mtool_Magento::$staticRoot)
+                    ) {
+                        $projectConfigId = $key;
+                        break;
+                    }
+                }
+            }
+
+            if (!is_null($projectConfigId)) {
+                $configs = $iniConfig->projects->{$projectConfigId}->toArray();
+            } else {
+                // @todo ask user about configs and create config file
+                // no config for the current project
+                throw new Mtool_Codegen_Exception_Filesystem(
+                    "Cannot find config data for this project in the {$configFile}"
+                );
+            }
+        }
+        if (!isset($configs['license_path'])) {
+            $configs['license_path'] = '';
+        }
+        list($configs['license'], $configs['license_short']) = $this->_getLicenseStrings($configs['license_path']);
+        return $configs;
+    }
+
+    /**
      * Retrurns License text with the asterisk before each string
      *
      * @return string
      */
-    protected function _getLicenseStrings()
+    protected function _getLicenseStrings($filename = '')
     {
-        $strings = file(Mtool_Magento::$mtoolDir . DIRECTORY_SEPARATOR . 'var' . DIRECTORY_SEPARATOR . 'license');
-        return ' * ' . implode(' * ', $strings);
+        if (is_readable($filename)) {
+            $strings = file($filename);
+        } else {
+            $strings = file(Mtool_Magento::$mtoolDir . DIRECTORY_SEPARATOR . 'var' . DIRECTORY_SEPARATOR . 'license');
+        }
+
+        for ($i = 0; $i < count($strings); $i++) {
+            if (preg_match('/^@license\s+(.*)/', $strings[$i], $matchs)) {
+                $licenseShort = $matchs[1];
+                unset($strings[$i]);
+            }
+        }
+
+        return array(' * ' . implode(' * ', $strings), $licenseShort);
     }
 
     /**
@@ -73,8 +144,9 @@ abstract class Mtool_Codegen_Entity_Abstract
         // Create namespace in config if not exist
         $config = new Mtool_Codegen_Config($module->getConfigPath('config.xml'));
         $configPath = "global/{$this->_configNamespace}/{$namespace}/class";
-		if(!$config->get($configPath))
-			$config->set($configPath, "{$module->getName()}_{$this->_entityName}");
+        if (!$config->get($configPath)) {
+            $config->set($configPath, "{$module->getName()}_{$this->_entityName}");
+        }
     }
 
     /**
@@ -114,16 +186,13 @@ abstract class Mtool_Codegen_Entity_Abstract
      */
     public function lookupOriginEntityClass($namespace, $configs, $field = 'class')
     {
-		foreach($configs as $_config)
-		{
-			try
-			{
+        foreach ($configs as $_config) {
+            try {
                 $config = new Mtool_Codegen_Config(@$_config[0]);
-				if($prefix = $config->get("global/{$this->_configNamespace}/{$namespace}/{$field}"))
-					return $prefix;
+                if ($prefix = $config->get("global/{$this->_configNamespace}/{$namespace}/{$field}")) return $prefix;
+            } catch (Exception $e) {
+
             }
-			catch(Exception $e)
-			{}
         }
 
         throw new Mtool_Codegen_Exception_Entity("Module with namespace {$namespace} not found");
@@ -152,15 +221,18 @@ abstract class Mtool_Codegen_Entity_Abstract
 
         // Move class template file
         $classTemplate = new Mtool_Codegen_Template($template);
-		$resultingClassName = "{$module->getName()}_{$this->_entityName}_{$className}" ;
+        $resultingClassName = "{$module->getName()}_{$this->_entityName}_{$className}";
         $defaultParams = array(
-            'company_name'  => $module->getCompanyName(),
-            'module_name'   => $module->getModuleName(),
-            'class_name'    => $resultingClassName,
-            'year'          => date('Y'),
-            'license'       => $this->_getLicenseStrings(),
+            'company_name' => $module->getCompanyName(),
+            'module_name' => $module->getModuleName(),
+            'class_name' => $resultingClassName,
+            'year' => date('Y'),
+            'license' => $this->_getLicenseStrings(),
         );
-        $classTemplate->setParams(array_merge($defaultParams, $params));
+
+        $iniParams = $this->_getConfig();
+
+        $classTemplate->setParams(array_merge($defaultParams, $params, $iniParams));
         $classTemplate
                 ->move($classDir, $classFilename);
 
@@ -176,8 +248,10 @@ abstract class Mtool_Codegen_Entity_Abstract
     protected function _ucPath($steps)
     {
         $result = array();
-		foreach($steps as $_step)
-			$result[] = ucfirst($_step);
+        foreach ($steps as $_step) {
+            $result[] = ucfirst($_step);
+        }
         return $result;
     }
+
 }

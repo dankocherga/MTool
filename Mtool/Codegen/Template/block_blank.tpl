@@ -31,6 +31,6 @@
  * @subpackage Block
  * @author     #{author}
  */
-class #{class_name}
+class #{class_name} extends Mage_Core_Block_Template
 {
 }

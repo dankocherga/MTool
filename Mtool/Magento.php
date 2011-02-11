@@ -15,6 +15,8 @@ class Mtool_Magento
 	 */
 	protected $_root;
 
+    static $staticRoot;
+    
     /**
      * Mtool directory
      *
@@ -38,7 +40,8 @@ class Mtool_Magento
 	{
 		$this->_root = Mtool_Codegen_Filesystem::slash($root);
         self::$mtoolDir = dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'Mtool';
-        self::$homeDir = posix_getpwuid(getmyuid());
+        self::$homeDir = $_SERVER['HOME'];
+        self::$staticRoot = rtrim($this->_root, '/');
 	}
 
 	/**
