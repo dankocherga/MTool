@@ -1,24 +1,28 @@
 <?php
 /**
- * Oggetto web extension
+ * #{company_name} extension for Magento
  *
- * Module upgrader
+ * Long description of this file (if any...)
  *
  * NOTICE OF LICENSE
  *
- * This source file is subject to the Open Software License (OSL 3.0)
- * that is bundled with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
- * http://opensource.org/licenses/osl-3.0.php
+#{license}
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade
+ * the #{company_name} #{module_name} module to newer versions in the future.
+ * If you wish to customize the #{company_name} #{module_name} module for your needs
+ * please refer to http://www.magentocommerce.com for more information.
  *
  * @category   #{company_name}
  * @package    #{company_name}_#{module_name}
- * @copyright  Copyright © 2008–2011 Oggetto Web ltd (http://oggettoweb.com/)
- * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @copyright  Copyright (C) #{year} #{copyright_company}
+ * @license    #{license_short}
  */
 $installer = $this;
 $installer->startSetup();
 
 
 
-$installer->endSetup(); 
+$installer->endSetup();

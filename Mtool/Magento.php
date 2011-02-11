@@ -15,6 +15,20 @@ class Mtool_Magento
 	 */
 	protected $_root;
 
+    /**
+     * Mtool directory
+     *
+     * @var string
+     */
+    static $mtoolDir;
+
+    /**
+     * User's home directoruy
+     *
+     * @var string
+     */
+    static $homeDir;
+
 	/**
 	 * Configure path to magento
 	 * 
@@ -23,6 +37,8 @@ class Mtool_Magento
 	public function __construct($root)
 	{
 		$this->_root = Mtool_Codegen_Filesystem::slash($root);
+        self::$mtoolDir = dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'Mtool';
+        self::$homeDir = posix_getpwuid(getmyuid());
 	}
 
 	/**
