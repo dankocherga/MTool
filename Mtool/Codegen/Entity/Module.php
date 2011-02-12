@@ -6,7 +6,7 @@
  * @package    Codegen
  * @author     Kocherga Daniel @ oggetto web
  */
-class Mtool_Codegen_Entity_Module
+class Mtool_Codegen_Entity_Module extends Mtool_Codegen_Entity_Abstract
 {
     /*
      * Upgrade modes
@@ -87,15 +87,25 @@ class Mtool_Codegen_Entity_Module
 		// Create module dir
 		Mtool_Codegen_Filesystem::mkdir($this->_moduleDir);
 
+        $name = $this->getName();
+        $iniParams = $this->_getConfig();
+
+        $params = array_merge($iniParams, array(
+            'module_name'   =>  $name,
+            'company_name'  =>  $this->getCompanyName(),
+            'year'          =>  date('Y'),
+        ));
+
 		// Create config.xml file
 		$configTemplate = new Mtool_Codegen_Template('module_config_empty');
-		$configTemplate->move($this->_moduleConfigsDir, 'config.xml');
+        $configTemplate
+            ->setParams($params)
+            ->move($this->_moduleConfigsDir, 'config.xml');
 
 		// Create module file under app/etc/modules
-		$modulesTemplate = new Mtool_Codegen_Template('module_etc');
-		$name = $this->getName();
-		$modulesTemplate
-			->setParams(array('module_name' => $name))
+        $modulesTemplate = new Mtool_Codegen_Template('module_etc');
+        $modulesTemplate
+            ->setParams($params)
 			->move($this->_mage->getModulesConfigPath(), "{$name}.xml");
 	}
 

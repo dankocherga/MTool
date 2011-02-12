@@ -125,7 +125,7 @@ abstract class Mtool_Codegen_Entity_Abstract
      * @throws Mtool_Codegen_Exception_Filesystem
      * @return array
      */
-    private function _getConfig()
+    protected function _getConfig()
     {
         $configFile = Mtool_Magento::$homeDir . DIRECTORY_SEPARATOR . self::CONFIG_FILE_NAME;
 
