@@ -41,6 +41,85 @@ abstract class Mtool_Codegen_Entity_Abstract
     protected $_configNamespace;
 
     /**
+     * Create configs for project
+     * 
+     * Configs will be created by asking user to answer some questions
+     * and saved in the config file (~/.mtool.ini)
+     *
+     * @param  string $configFileName config file name, basically it's ~/.mtool.ini
+     * @return null
+     */
+    public function _createConfig($configFileName)
+    {
+        // id of the last project
+        $maxProjectId = 0;
+
+        // create config file if it's not exists
+        if (!file_exists($configFileName)) {
+            if (!$configFileHandle = fopen($configFileName, 'a+')) {
+                throw new Mtool_Codegen_Exception_Filesystem(
+                        "Cannot create config file {$configFileName}.  Maybe permissions problem?"
+                );
+            } else {
+                fclose($configFileHandle);
+            }
+        }
+
+        // if file already exists, try to find other projects configs
+        $iniConfig = new Zend_Config_Ini($configFileName, 
+                                         null,
+                                         array(
+                                            'skipExtends' => true,
+                                            'allowModifications' => true
+                                         )
+        );
+
+        if (!is_null($iniConfig->projects)) {
+            $maxProjectId = max(array_keys($iniConfig->projects->toArray()));
+        }
+
+        // access to _ask()/_anwer() methods
+        $cli = new Mtool_Client_Console();
+
+        $author = $cli->ask("Please, enter data for the @autor stirng\n"
+                        . "For example, Dan Kocherga <vsushkov@oggettoweb.com>"
+        );
+
+        $copyright = $cli->ask("Please, enter data for the copyright owner\n"
+                        . "For example, Oggetto Web ltd (http://oggettoweb.com/)"
+        );
+
+        $licensePath = $cli->ask("Please, enter path to the license file\n"
+                        . "For example, /home/user/project/license.lic\n"
+                        . "Or press Enter to use the same as in the Magento"
+        );
+
+        $projectId = $maxProjectId + 1;
+
+        $projects = array($projectId => array(
+                'copyright_company' => $copyright,
+                'path' => Mtool_Magento::$staticRoot,
+                'author' => $author,
+                ));
+
+        if ($licensePath) {
+            $projects[$projectId]['license_path'] = $licensePath;
+        }
+
+        $iniConfig->projects = $projects;
+
+        // save configurations to the config file
+        $options = array(
+            'config' => $iniConfig,
+            'filename' => $configFileName,
+        );
+        $writer = new Zend_Config_Writer_Ini($options);
+        $writer->write();
+
+        return $iniConfig;
+    }
+
+    /**
      * Get params from config file
      *
      * @throws Mtool_Codegen_Exception_Filesystem
@@ -49,30 +128,23 @@ abstract class Mtool_Codegen_Entity_Abstract
     private function _getConfig()
     {
         $configFile = Mtool_Magento::$homeDir . DIRECTORY_SEPARATOR . self::CONFIG_FILE_NAME;
-        // create config file if it's not exists
-        if (!file_exists($configFile)) {
-            if (!$handle = fopen($configFile, 'a+')) {
-                throw new Mtool_Codegen_Exception_Filesystem(
-                    "Cannot create config file {$configFile}.  Maybe permissions problem?"
-                );
-            }
-            fclose($handle);
+
+        try {
+            $iniConfig = new Zend_Config_Ini($configFile);
+        } catch (Zend_Config_Exception $e) {
+            $iniConfig = $this->_createConfig($configFile);
         }
 
-        $iniConfig = new Zend_Config_Ini($configFile, null, array('allowModifications' => true));
         if (is_null($iniConfig->projects)) {
-            // @todo ask user about configs and create config file
             // no 'projects' in the config file
-            throw new Mtool_Codegen_Exception_Filesystem(
-                "Cannot find config data for this project in the {$configFile}"
-            );
+            $iniConfig = $this->_createConfig($configFile);
         } else {
             $projectConfigId = null;
             // find id of current project
             foreach ($iniConfig->projects->toArray() as $key => $_projectConfig) {
                 if (is_array($_projectConfig)) {
                     if ((isset($_projectConfig['path']))
-                         && ($_projectConfig['path'] == Mtool_Magento::$staticRoot)
+                            && ($_projectConfig['path'] == Mtool_Magento::$staticRoot)
                     ) {
                         $projectConfigId = $key;
                         break;
@@ -83,11 +155,8 @@ abstract class Mtool_Codegen_Entity_Abstract
             if (!is_null($projectConfigId)) {
                 $configs = $iniConfig->projects->{$projectConfigId}->toArray();
             } else {
-                // @todo ask user about configs and create config file
                 // no config for the current project
-                throw new Mtool_Codegen_Exception_Filesystem(
-                    "Cannot find config data for this project in the {$configFile}"
-                );
+                $iniConfig = $this->_createConfig($configFile);
             }
         }
         if (!isset($configs['license_path'])) {
