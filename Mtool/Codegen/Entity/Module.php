@@ -135,8 +135,16 @@ class Mtool_Codegen_Entity_Module extends Mtool_Codegen_Entity_Abstract
 
         // Create installer file
 		$modulesTemplate = new Mtool_Codegen_Template('module_installer');
+
+        $iniParams = $this->_getConfig();
+        $params = array_merge($iniParams, array(
+            'module_name'   =>  $this->_companyName,
+            'company_name'  =>  $this->_companyName,
+            'year'          =>  date('Y'),
+        ));
+
 		$modulesTemplate
-			->setParams(array('company_name' => $this->_companyName, 'module_name' => $this->_moduleName))
+			->setParams($params)
 			->move($this->_moduleSqlDir . DIRECTORY_SEPARATOR . $setupNamspace , "mysql4-install-{$version}.php");
     }
 
@@ -173,8 +181,16 @@ class Mtool_Codegen_Entity_Module extends Mtool_Codegen_Entity_Abstract
         // Create upgrade file
         $setupNamspace = strtolower($this->getName()) . '_setup';
 		$modulesTemplate = new Mtool_Codegen_Template('module_upgrader');
+
+        $iniParams = $this->_getConfig();
+        $params = array_merge($iniParams, array(
+            'module_name'   =>  $this->_companyName,
+            'company_name'  =>  $this->_companyName,
+            'year'          =>  date('Y'),
+        ));
+
 		$modulesTemplate
-			->setParams(array('company_name' => $this->_companyName, 'module_name' => $this->_moduleName))
+			->setParams($params)
 			->move($this->_moduleSqlDir . DIRECTORY_SEPARATOR . $setupNamspace , "mysql4-upgrade-{$currentVersion}-{$version}.php");
     }
 
