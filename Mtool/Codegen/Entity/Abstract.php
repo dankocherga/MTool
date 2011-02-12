@@ -186,7 +186,10 @@ abstract class Mtool_Codegen_Entity_Abstract
             }
         }
 
-        return array(' * ' . implode(' * ', $strings), $licenseShort);
+        array_unshift($strings, '');
+        array_push($strings, '');
+
+        return array(implode(' * ', $strings), $licenseShort);
     }
 
     /**
@@ -296,7 +299,6 @@ abstract class Mtool_Codegen_Entity_Abstract
             'module_name' => $module->getModuleName(),
             'class_name' => $resultingClassName,
             'year' => date('Y'),
-            'license' => $this->_getLicenseStrings(),
         );
 
         $iniParams = $this->_getConfig();
