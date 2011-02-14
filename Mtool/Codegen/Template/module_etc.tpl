@@ -16,7 +16,7 @@
  * please refer to http://www.magentocommerce.com for more information.
  *
  * @category   #{company_name}
- * @package    #{company_name}_#{module_name}
+ * @package    #{module_name}
  * @copyright  Copyright (C) #{year} #{copyright_company}
  * @license    #{license_short}
  */
