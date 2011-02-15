@@ -15,22 +15,6 @@ class Mtool_Magento
 	 */
 	protected $_root;
 
-    static $staticRoot;
-    
-    /**
-     * Mtool directory
-     *
-     * @var string
-     */
-    static $mtoolDir;
-
-    /**
-     * User's home directoruy
-     *
-     * @var string
-     */
-    static $homeDir;
-
 	/**
 	 * Configure path to magento
 	 * 
@@ -39,9 +23,6 @@ class Mtool_Magento
 	public function __construct($root)
 	{
 		$this->_root = Mtool_Codegen_Filesystem::slash($root);
-        self::$mtoolDir = dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'Mtool';
-        self::$homeDir = $_SERVER['HOME'];
-        self::$staticRoot = rtrim($this->_root, '/');
 	}
 
 	/**
@@ -85,4 +66,34 @@ class Mtool_Magento
 			$where = $this->_root . 'app' . DIRECTORY_SEPARATOR . 'code';
 		return Mtool_Codegen_Browser::find($search, $where);
 	}
+
+    /**
+     * Get user's home directory path
+     *
+     * @return string
+     */
+    public static function getHomeDir()
+    {
+        return $_SERVER['HOME'];
+    }
+
+    /**
+     * Get project root directory path
+     *
+     * @return string
+     */
+    public static function getRoot()
+    {
+        return rtrim(Mtool_Codegen_Filesystem::slash(getcwd()), '/');
+    }
+
+    /**
+     * Get Mtool directory path
+     *
+     * @return string
+     */
+    public static function getMtoolDir()
+    {
+        return dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'Mtool';
+    }
 }

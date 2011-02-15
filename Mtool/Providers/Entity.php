@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 /**
  * Mage entity provider
  *
@@ -6,81 +7,87 @@
  * @package    Providers
  * @author     Kocherga Daniel @ oggetto web
  */
-class Mtool_Providers_Entity
-    extends Mtool_Providers_Abstract
+class Mtool_Providers_Entity extends Mtool_Providers_Abstract
 {
-	/**
-	 * Create entity
-	 *
-	 * @param Mtool_Codegen_Entity_Abstract $entity
-	 * @param string $name
-	 * @param string $targetModule in format of companyname/modulename
-	 * @param string $entityPath in format of mymodule/model_path
-	 */
-	protected function _createEntity($entity, $name, $targetModule = null, $entityPath = null)
-	{
-		if($targetModule == null)
-			$targetModule = $this->_ask('Enter the target module (in format of Mycompany/Mymodule)');
-		if($entityPath == null)
-			$entityPath = $this->_ask("Enter the {$name} path (in format of mymodule/{$name}_path)");
+    /**
+     * Create entity
+     *
+     * @param Mtool_Codegen_Entity_Abstract $entity
+     * @param string $name
+     * @param string $targetModule in format of companyname/modulename
+     * @param string $entityPath in format of mymodule/model_path
+     */
+    protected function _createEntity($entity, $name, $targetModule = null, $entityPath = null)
+    {
+        if ($targetModule == null) {
+            $targetModule = $this->_ask('Enter the target module (in format of Mycompany/Mymodule)');
+        }
+        if ($entityPath == null) {
+            $entityPath = $this->_ask("Enter the {$name} path (in format of mymodule/{$name}_path)");
+        }
 
-		list($companyName, $moduleName) = explode('/', $targetModule);
-		$module = new Mtool_Codegen_Entity_Module(getcwd(), $moduleName, $companyName);
+        list($companyName, $moduleName) = explode('/', $targetModule);
 
-		list($namespace, $entityName) = explode('/', $entityPath);
+        $module = new Mtool_Codegen_Entity_Module(getcwd(), $moduleName, $companyName, $this->_getConfig());
 
-		$entity->create($namespace, $entityName, $module);
+        list($namespace, $entityName) = explode('/', $entityPath);
 
-		$this->_answer('Done');
-	}
+        $entity->create($namespace, $entityName, $module);
 
-	/**
-	 * Create entity with target module autoguessing
-	 *
-	 * @param Mtool_Codegen_Entity_Abstract $entity
-	 * @param string $name
-	 * @param string $entityPath in format of mymodule/model_path
-	 */
-	protected function _createEntityWithAutoguess($entity, $name, $entityPath = null)
-	{
-		if($entityPath == null)
-			$entityPath = $this->_ask("Enter the {$name} path (in format of mymodule/{$name}_path)");
-		list($namespace, $entityName) = explode('/', $entityPath);
+        $this->_answer('Done');
+    }
 
-		$module = Mtool_Codegen_Entity_Module_Finder::byNamespace(getcwd(), $entity, $namespace);
-		if($module == null)
-		{
-			$targetModule = $this->_ask("Unfortunately module with {$name} namespace '{$namespace}' was not found. Enter the target module (in format of Mycompany/Mymodule)");
-			list($companyName, $moduleName) = explode('/', $targetModule);
-			$module = new Mtool_Codegen_Entity_Module(getcwd(), $moduleName, $companyName);
-		}
+    /**
+     * Create entity with target module autoguessing
+     *
+     * @param Mtool_Codegen_Entity_Abstract $entity
+     * @param string $name
+     * @param string $entityPath in format of mymodule/model_path
+     */
+    protected function _createEntityWithAutoguess($entity, $name, $entityPath = null)
+    {
+        if ($entityPath == null) {
+            $entityPath = $this->_ask("Enter the {$name} path (in format of mymodule/{$name}_path)");
+        }
+        list($namespace, $entityName) = explode('/', $entityPath);
 
-		$entity->create($namespace, $entityName, $module);
-		$this->_answer("New {$name} created under {$module->getName()} module");
-	}
+        $module = Mtool_Codegen_Entity_Module_Finder::byNamespace(getcwd(), $entity, $namespace, $this->_getConfig());
+        if ($module == null) {
+            $targetModule = $this->_ask("Unfortunately module with {$name} namespace '{$namespace}' was not found. Enter the target module (in format of Mycompany/Mymodule)");
+            list($companyName, $moduleName) = explode('/', $targetModule);
+            $module = new Mtool_Codegen_Entity_Module(getcwd(), $moduleName, $companyName, $this->_getConfig());
+        }
 
-	/**
-	 * Rewrite entity
-	 *
-	 * @param Mtool_Codegen_Entity_Abstract $entity
-	 * @param string $name
-	 */
-	protected function _rewriteEntity($entity, $name, $targetModule = null, $originEntityPath = null, $entityName = null)
-	{
-		if($targetModule == null)
-			$targetModule = $this->_ask('Enter the target module (in format of Mycompany/Mymodule)');
-		if($originEntityPath == null)
-			$originEntityPath = $this->_ask("Enter the magento {$name} path (for example catalog/product_type_simple)");
-		if($entityName == null)
-			$entityName = $this->_ask("Enter your {$name} path (without namespace, in format of {$name}_path)");
+        $entity->create($namespace, $entityName, $module);
+        $this->_answer("New {$name} created under {$module->getName()} module");
+    }
 
-		list($companyName, $moduleName) = explode('/', $targetModule);
-		$module = new Mtool_Codegen_Entity_Module(getcwd(), $moduleName, $companyName);
+    /**
+     * Rewrite entity
+     *
+     * @param Mtool_Codegen_Entity_Abstract $entity
+     * @param string $name
+     */
+    protected function _rewriteEntity($entity, $name, $targetModule = null, $originEntityPath = null, $entityName = null)
+    {
+        if ($targetModule == null) {
+            $targetModule = $this->_ask('Enter the target module (in format of Mycompany/Mymodule)');
+        }
+        if ($originEntityPath == null) {
+            $originEntityPath = $this->_ask("Enter the magento {$name} path (for example catalog/product_type_simple)");
+        }
+        if ($entityName == null) {
+            $entityName = $this->_ask("Enter your {$name} path (without namespace, in format of {$name}_path)");
+        }
 
-		list($originNamespace, $originEntityName) = explode('/', $originEntityPath);
+        list($companyName, $moduleName) = explode('/', $targetModule);
+        $module = new Mtool_Codegen_Entity_Module(getcwd(), $moduleName, $companyName, $this->_getConfig());
 
-		$entity->rewrite($originNamespace, $originEntityName, $entityName, $module);
+        list($originNamespace, $originEntityName) = explode('/', $originEntityPath);
 
-		$this->_answer('Done');
-	}
+        $entity->rewrite($originNamespace, $originEntityName, $entityName, $module);
+
+        $this->_answer('Done');
+    }
+
 }

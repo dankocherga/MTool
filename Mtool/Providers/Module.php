@@ -31,7 +31,7 @@ class Mtool_Providers_Module extends Mtool_Providers_Abstract
 		else
 			list($companyName, $moduleName) = explode('/', $name);
 
-		$module = new Mtool_Codegen_Entity_Module(getcwd(), $moduleName, $companyName);
+		$module = new Mtool_Codegen_Entity_Module(getcwd(), $moduleName, $companyName, $this->_getConfig());
 		$module->createDummy();
 
 		$this->_answer('Done');
@@ -50,7 +50,7 @@ class Mtool_Providers_Module extends Mtool_Providers_Abstract
         if($version == null)
 			$version = $this->_ask('Enter the initial module version (like 1.0.0)');
         list($companyName, $moduleName) = explode('/', $name);
-		$module = new Mtool_Codegen_Entity_Module(getcwd(), $moduleName, $companyName);
+		$module = new Mtool_Codegen_Entity_Module(getcwd(), $moduleName, $companyName, $this->_getConfig());
 
         $module->install($version);
         $this->_answer('Done');
@@ -76,7 +76,7 @@ class Mtool_Providers_Module extends Mtool_Providers_Abstract
             }
 
         list($companyName, $moduleName) = explode('/', $name);
-		$module = new Mtool_Codegen_Entity_Module(getcwd(), $moduleName, $companyName);
+		$module = new Mtool_Codegen_Entity_Module(getcwd(), $moduleName, $companyName, $this->_getConfig());
 
         $module->upgrade($mode, $version);
         $this->_answer('Done');
