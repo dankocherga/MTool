@@ -85,9 +85,9 @@ class Mtool_Codegen_Entity_Module extends Mtool_Codegen_Entity_Abstract
 
     /**
      * Create dummy module:
-     * 	1. create module folder under app/code/local
-     * 	2. create module config.xml file
-     * 	3. create module file under app/etc/modules
+     *     1. create module folder under app/code/local
+     *     2. create module config.xml file
+     *     3. create module file under app/etc/modules
      */
     public function createDummy()
     {

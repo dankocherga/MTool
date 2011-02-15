@@ -15,14 +15,14 @@ class Mtool_Providers_Mtool
      */
     protected $_version = '1.0.0';
 
-	/**
-	 * Get provider name
-	 * @return string
-	 */
-	public function getName()
-	{
-		return 'mtool';
-	}
+    /**
+     * Get provider name
+     * @return string
+     */
+    public function getName()
+    {
+        return 'mtool';
+    }
 
     /**
      * Check mtool working

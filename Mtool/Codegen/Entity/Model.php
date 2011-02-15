@@ -8,33 +8,33 @@
  */
 class Mtool_Codegen_Entity_Model extends Mtool_Codegen_Entity_Abstract
 {
-	/**
-	 * Entity folder name
-	 * @var string
-	 */
-	protected $_folderName = 'Model';
+    /**
+     * Entity folder name
+     * @var string
+     */
+    protected $_folderName = 'Model';
 
-	/**
-	 * Create template name
-	 * @var string
-	 */
-	protected $_createTemplate = 'model_blank';
+    /**
+     * Create template name
+     * @var string
+     */
+    protected $_createTemplate = 'model_blank';
 
-	/**
-	 * Rewrite template name
-	 * @var string
-	 */
-	protected $_rewriteTemplate = 'model_rewrite';
+    /**
+     * Rewrite template name
+     * @var string
+     */
+    protected $_rewriteTemplate = 'model_rewrite';
 
-	/**
-	 * Entity name
-	 * @var string
-	 */
-	protected $_entityName = 'Model';
+    /**
+     * Entity name
+     * @var string
+     */
+    protected $_entityName = 'Model';
 
-	/**
-	 * Namespace in config file
-	 * @var string
-	 */
-	protected $_configNamespace = 'models';
+    /**
+     * Namespace in config file
+     * @var string
+     */
+    protected $_configNamespace = 'models';
 }
