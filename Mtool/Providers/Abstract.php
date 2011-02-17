@@ -13,6 +13,7 @@ abstract class Mtool_Providers_Abstract extends Zend_Tool_Framework_Provider_Abs
      * Config file name
      */
     const CONFIG_FILE_NAME = '.mtool.ini';
+
     /**
      * Create configs for project
      *
