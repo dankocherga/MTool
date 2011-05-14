@@ -20,6 +20,11 @@
  * @copyright  Copyright (C) #{year} #{copyright_company}
  * @license    #{license_short}
  */
+
+/**
+ * @var $this #{class}
+ */
+
 $installer = $this;
 $installer->startSetup();
 
