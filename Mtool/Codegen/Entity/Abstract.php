@@ -25,6 +25,7 @@
  */
 abstract class Mtool_Codegen_Entity_Abstract
 {
+    const RECOMMENDED_ZEND_CODING_STANDARD_LINE_LENGTH = 80;
 
     /**
      * Entity folder name
@@ -158,6 +159,11 @@ abstract class Mtool_Codegen_Entity_Abstract
         // Move class template file
         $classTemplate = new Mtool_Codegen_Template($template);
         $resultingClassName = "{$module->getName()}_{$this->_entityName}_{$className}";
+
+        if (strlen('class ' . $resultingClassName) >= self::RECOMMENDED_ZEND_CODING_STANDARD_LINE_LENGTH) {
+            $resultingClassName .= "\n   ";
+        }
+
         $defaultParams = array(
             'company_name' => $module->getCompanyName(),
             'module_name' => $module->getModuleName(),
