@@ -79,13 +79,22 @@ abstract class Mtool_Providers_Abstract extends Zend_Tool_Framework_Provider_Abs
                         . "Or press Enter to use the same as in the Magento"
         );
 
+        $moduleOwner = $this->_ask(
+            "Please, enter module owner\n"
+            . "For example, Oggetto Web\n"
+            . "It will be used to generate a short file description string"
+        );
+
         $projectId = $maxProjectId + 1;
 
-        $newProject = array($projectId => array(
+        $newProject = array(
+            $projectId => array(
                 'copyright_company' => $copyright,
-                'path' => Mtool_Magento::getRoot(),
-                'author' => $author,
-                ));
+                'path'              => Mtool_Magento::getRoot(),
+                'author'            => $author,
+                'module_owner'      => $moduleOwner,
+            )
+        );
 
         if ($licensePath) {
             $newProject[$projectId]['license_path'] = $licensePath;

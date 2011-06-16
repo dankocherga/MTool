@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 /**
- * #{company_name} extension for Magento
+ * #{module_owner} extension for Magento
  *
  * Long description of this file (if any...)
  *

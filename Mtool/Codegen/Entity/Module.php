@@ -91,10 +91,12 @@ class Mtool_Codegen_Entity_Module extends Mtool_Codegen_Entity_Abstract
         $this->_companyName = ucfirst($companyName);
         $this->_templateParams = $params;
 
-        $this->_moduleDir = $this->_mage->getCodepoolPath() .
-                            $this->_companyName .
-                            DIRECTORY_SEPARATOR .
-                            $this->_moduleName;
+        $this->_moduleDir = $this->_mage->getCodepoolPath() 
+            . $this->_companyName 
+            . DIRECTORY_SEPARATOR 
+            . $this->_moduleName
+        ;
+
         $this->_moduleConfigsDir = $this->_moduleDir . DIRECTORY_SEPARATOR . 'etc';
         $this->_moduleSqlDir = $this->_moduleDir . DIRECTORY_SEPARATOR . 'sql';
     }
