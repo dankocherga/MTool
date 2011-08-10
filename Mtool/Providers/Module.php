@@ -39,7 +39,7 @@ class Mtool_Providers_Module extends Mtool_Providers_Abstract
      */
     public function create($name = null)
     {
-        if ($name == null) {
+        if ($name == null || false === strpos($name, '/')) {
             $companyName = $this->_ask('Enter the company name');
             $moduleName = $this->_ask('Enter the module name');
         }
