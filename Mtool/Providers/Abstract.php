@@ -66,7 +66,7 @@ abstract class Mtool_Providers_Abstract extends Zend_Tool_Framework_Provider_Abs
         }
 
         // access to _ask()/_anwer() methods
-        $author = $this->_ask("Please, enter data for the @author stirng\n"
+        $author = $this->_ask("Please, enter data for the @author string\n"
                         . "For example, Dan Kocherga <vsushkov@oggettoweb.com>"
         );
 
