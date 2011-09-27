@@ -33,15 +33,17 @@ class Mtool_Codegen_Filesystem
      */
     public static function mkdir($path)
     {
-        if(is_dir($path))
+        if(is_dir($path)) {
             return;
+        }
 
         $result = mkdir($path, 0777, true);
-        if($result === false)
+        if($result === false) {
             throw new Mtool_Codegen_Exception_Filesystem(
                 "Cannot create directory {$path}.  Maybe permissions problem?"
             );
-        system('chmod -R 777 ' . $path);
+        }
+        system('chmod -R 755 ' . $path);
     }
 
     /**
@@ -55,10 +57,11 @@ class Mtool_Codegen_Filesystem
     {
         $handle = fopen($filepath, 'r');
         $result = fread($handle, filesize($filepath));
-        if($result === false)
+        if($result === false) {
             throw new Mtool_Codegen_Exception_Filesystem(
                 "Cannot read file {$filepath}"
             );
+        }
         return $result;
     }
 
@@ -74,11 +77,12 @@ class Mtool_Codegen_Filesystem
     {
         $handle = fopen($filepath, 'w+');
         $result = fwrite($handle, $content);
-        if($result === false)
+        if($result === false) {
             throw new Mtool_Codegen_Exception_Filesystem(
                 "Cannot write into file {$filepath}"
             );
-        system('chmod -R 777 ' . $filepath);
+        }
+        system('chmod -R 644 ' . $filepath);
         return $result;
     }
 
@@ -104,8 +108,9 @@ class Mtool_Codegen_Filesystem
      */
     public static function slash($path)
     {
-        if($path[strlen($path) - 1] != DIRECTORY_SEPARATOR)
+        if($path[strlen($path) - 1] != DIRECTORY_SEPARATOR) {
             $path .= DIRECTORY_SEPARATOR;
+        }
         return $path;
     }
 }
