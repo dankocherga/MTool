@@ -27,7 +27,12 @@
 
 $installer = $this;
 $installer->startSetup();
-
-
-
-$installer->endSetup();
+$connection = $installer->getConnection();
+$connection->beginTransaction();
+try {
+    #code here...
+    $connection->commit();
+} catch (Exception $e) {
+    Mage::logException($e);
+    $connection->rollBack();
+}
