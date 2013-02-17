@@ -40,7 +40,7 @@ class CreatorTest extends \PHPUnit_Framework_TestCase
      */
     public function createAddsModuleEtcDirectoryToLocalPool()
     {
-        $module = $this->getMock('\Core\Module', array('getCompany', 'getName'));
+        $module = $this->getMock('\Core\Module');
         $module->expects($this->any())->method('getCompany')
             ->will($this->returnValue('MyCompany'));
         $module->expects($this->any())->method('getName')
