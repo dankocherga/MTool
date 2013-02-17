@@ -19,6 +19,7 @@
  */
 
 namespace Core\Environment;
+
 require_once 'core/Environment/Execution.php';
 
 /**

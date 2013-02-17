@@ -10,52 +10,25 @@
  * that is available through the world-wide-web at this URL:
  * http://opensource.org/licenses/osl-3.0.php
  *
- * @category  Tests
- * @package   Core
+ * @category  Core
+ * @package   Filesystem
  * @author    Daniel Kocherga <dan.kocherga@gmail.com>
  * @copyright 2013 Daniel Kocherga (dan.kocherga@gmail.com)
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      https://github.com/dankocherga/MTool
  */
 
-namespace Core;
-
-require_once 'core/Module.php';
+namespace Core\Filesystem;
 
 /**
- * Module creator test case
+ * File-based filesystem
  *
- * @category Tests
- * @package  Core
+ * @category Core
+ * @package  Filesystem
  * @author   Daniel Kocherga <dan@oggettoweb.com>
  * @license  http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link     https://github.com/dankocherga/MTool
  */
-class ModuleTest extends \PHPUnit_Framework_TestCase
+class Exception extends \Exception
 {
-    /**
-     * Stores company name 
-     * 
-     * @return void
-     * @test
-     */
-    public function storesCompanyName()
-    {
-        $module = new Module;
-        $module->setCompany('foo');
-        $this->assertEquals('foo', $module->getCompany());
-    }
-
-    /**
-     * Stores module name 
-     * 
-     * @return void
-     * @test
-     */
-    public function storesModuleName()
-    {
-        $module = new Module;
-        $module->setName('foo');
-        $this->assertEquals('foo', $module->getName());
-    }
 }

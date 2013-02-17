@@ -10,52 +10,43 @@
  * that is available through the world-wide-web at this URL:
  * http://opensource.org/licenses/osl-3.0.php
  *
- * @category  Tests
- * @package   Core
+ * @category  Core
+ * @package   Filesystem
  * @author    Daniel Kocherga <dan.kocherga@gmail.com>
  * @copyright 2013 Daniel Kocherga (dan.kocherga@gmail.com)
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      https://github.com/dankocherga/MTool
  */
 
-namespace Core;
+namespace Core\Filesystem;
 
-require_once 'core/Module.php';
+require_once 'core/IFilesystem.php';
+require_once 'core/Filesystem/Exception.php';
 
 /**
- * Module creator test case
+ * File-based filesystem
  *
- * @category Tests
- * @package  Core
+ * @category Core
+ * @package  Filesystem
  * @author   Daniel Kocherga <dan@oggettoweb.com>
  * @license  http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link     https://github.com/dankocherga/MTool
  */
-class ModuleTest extends \PHPUnit_Framework_TestCase
+class File implements \Core\IFilesystem
 {
     /**
-     * Stores company name 
+     * Create directory recursive 
+     * Separate directories with slash(/)
      * 
+     * @param string $path Path
+     *
      * @return void
-     * @test
      */
-    public function storesCompanyName()
+    public function mkdir($path)
     {
-        $module = new Module;
-        $module->setCompany('foo');
-        $this->assertEquals('foo', $module->getCompany());
-    }
-
-    /**
-     * Stores module name 
-     * 
-     * @return void
-     * @test
-     */
-    public function storesModuleName()
-    {
-        $module = new Module;
-        $module->setName('foo');
-        $this->assertEquals('foo', $module->getName());
+        $preparedPath = str_replace('/', DIRECTORY_SEPARATOR, $path);
+        if (!mkdir($preparedPath, 0755, true)) {
+            throw new Exception("Cannot create directory '{$preparedPath}'");
+        }
     }
 }

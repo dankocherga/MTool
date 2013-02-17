@@ -19,6 +19,7 @@
  */
 
 namespace Bundle\Module;
+
 require_once 'bundle/module/Creator.php';
 require_once 'core/IEnvironment.php';
 
@@ -51,7 +52,7 @@ class CreatorTest extends \PHPUnit_Framework_TestCase
         $env->expects($this->any())->method('getWorkingDir')
             ->will($this->returnValue('/foo/bar'));
 
-        $filesystem = $this->getMock('\Core\IFilesystem', array('mkdir'));
+        $filesystem = $this->getMock('\Core\IFilesystem');
         $filesystem->expects($this->once())->method('mkdir')
             ->with($this->equalTo('/foo/bar/app/code/local/MyCompany/MyModule/etc'));
 
