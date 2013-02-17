@@ -18,10 +18,8 @@
  * @link      https://github.com/dankocherga/MTool
  */
 
-namespace Core\Filesystem;
+namespace Core;
 use org\bovigo\vfs\vfsStream;
-
-require_once 'core/Filesystem/File.php';
 
 /**
  * Filesystem test case
@@ -32,7 +30,7 @@ require_once 'core/Filesystem/File.php';
  * @license  http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link     https://github.com/dankocherga/MTool
  */
-class FileTest extends \PHPUnit_Framework_TestCase
+class FilesystemTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * VFS root 
@@ -56,7 +54,7 @@ class FileTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->_root = vfsStream::setup('root');
-        $this->_fs = new File;
+        $this->_fs = new Filesystem;
     }
 
     /**
@@ -92,7 +90,7 @@ class FileTest extends \PHPUnit_Framework_TestCase
      * 
      * @return void
      * @test
-     * @expectedException Exception
+     * @expectedException Core\Filesystem\Exception
      */
     public function throwsExceptionIfDirectoryCouldNotBeCreated()
     {

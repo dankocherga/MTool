@@ -18,7 +18,7 @@
  * @link      https://github.com/dankocherga/MTool
  */
 
-namespace Core\Environment;
+namespace Core;
 
 /**
  * Execution environment test case
@@ -29,7 +29,7 @@ namespace Core\Environment;
  * @license  http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link     https://github.com/dankocherga/MTool
  */
-class ExecutionTest extends \PHPUnit_Framework_TestCase
+class ExecutionEnvironmentTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Returns current dir as working dir 
@@ -39,7 +39,7 @@ class ExecutionTest extends \PHPUnit_Framework_TestCase
      */
     public function returnsCurrentDirAsWorkingDir()
     {
-        $env = new Execution;
+        $env = new ExecutionEnvironment;
         $this->assertEquals(getcwd(), $env->getWorkingDir());
     }
 }

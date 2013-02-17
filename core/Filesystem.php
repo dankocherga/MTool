@@ -18,7 +18,7 @@
  * @link      https://github.com/dankocherga/MTool
  */
 
-namespace Core\Filesystem;
+namespace Core;
 
 /**
  * File-based filesystem
@@ -29,7 +29,7 @@ namespace Core\Filesystem;
  * @license  http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link     https://github.com/dankocherga/MTool
  */
-class File implements \Core\IFilesystem
+class Filesystem implements IFilesystem
 {
     /**
      * Create directory recursive 
@@ -43,7 +43,7 @@ class File implements \Core\IFilesystem
     {
         $preparedPath = str_replace('/', DIRECTORY_SEPARATOR, $path);
         if (!mkdir($preparedPath, 0755, true)) {
-            throw new Exception("Cannot create directory '{$preparedPath}'");
+            throw new Filesystem\Exception("Cannot create directory '{$preparedPath}'");
         }
     }
 }

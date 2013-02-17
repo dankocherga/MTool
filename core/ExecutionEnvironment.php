@@ -18,7 +18,7 @@
  * @link      https://github.com/dankocherga/MTool
  */
 
-namespace Core\Environment;
+namespace Core;
 
 /**
  * Script execution environment
@@ -29,7 +29,7 @@ namespace Core\Environment;
  * @license  http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link     https://github.com/dankocherga/MTool
  */
-class Execution implements \Core\IEnvironment
+class ExecutionEnvironment implements IEnvironment
 {
     /**
      * Get working dir 
