@@ -86,16 +86,20 @@ class FilesystemTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Throws exception if directory could not be created 
+     * Mkdir throws exception if directory cannot be created 
      * 
      * @return void
      * @test
-     * @expectedException Core\Filesystem\Exception
      */
-    public function throwsExceptionIfDirectoryCouldNotBeCreated()
+    public function mkdirThrowsExceptionIfDirectoryCannotBeCreated()
     {
         $file = vfsStream::newDirectory('foo', 0000)
             ->at($this->_root);
-        $this->_fs->mkdir(vfsStream::url('root/foo/bar'));
+        try {
+            $this->_fs->mkdir(vfsStream::url('root/foo/bar'));
+            $this->fail('Excepected exception has not been thrown.');
+        } catch (Filesystem\Exception $e) {
+            $this->assertContains('Cannot create directory', $e->getMessage());
+        }
     }
 }
