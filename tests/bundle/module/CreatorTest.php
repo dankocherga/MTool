@@ -20,6 +20,7 @@
 
 namespace Bundle\Module;
 require_once 'bundle/module/Creator.php';
+require_once 'core/IEnvironment.php';
 
 /**
  * Module creator test case
@@ -46,7 +47,7 @@ class CreatorTest extends \PHPUnit_Framework_TestCase
         $module->expects($this->any())->method('getName')
             ->will($this->returnValue('MyModule'));
 
-        $env = $this->getMock('\Core\IEnvironment', array('getWorkingDir'));
+        $env = $this->getMock('\Core\IEnvironment');
         $env->expects($this->any())->method('getWorkingDir')
             ->will($this->returnValue('/foo/bar'));
 
