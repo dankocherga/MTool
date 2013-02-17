@@ -2,6 +2,13 @@
     "require": {
         "phpunit/phpunit": "3.7.*",
         "phpunit/php-invoker": "1.1.*",
-        "mikey179/vfsStream": "v1.1.0"
-    }
+        "mikey179/vfsStream": "v1.1.0",
+        "zendframework/zend-loader": "2.0.*"
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://packages.zendframework.com/"
+        }
+    ]
 }

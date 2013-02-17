@@ -20,9 +20,6 @@
 
 namespace Bundle\Module;
 
-require_once 'bundle/module/Creator.php';
-require_once 'core/IEnvironment.php';
-
 /**
  * Module creator test case
  *

@@ -20,9 +20,6 @@
 
 namespace Core\Filesystem;
 
-require_once 'core/IFilesystem.php';
-require_once 'core/Filesystem/Exception.php';
-
 /**
  * File-based filesystem
  *
