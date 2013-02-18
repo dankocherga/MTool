@@ -37,4 +37,11 @@ interface ITemplateFactory
      * @return \Core\ITemplate
      */
     public function getModuleConfig();
+
+    /**
+     * Get module global config template
+     * 
+     * @return \Core\ITemplate
+     */
+    public function getModuleGlobalConfig();
 }

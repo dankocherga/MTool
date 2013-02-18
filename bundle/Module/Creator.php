@@ -48,9 +48,9 @@ class Creator
     /**
      * Init the creator 
      * 
-     * @param \Core\IFilesystem  $filesystem      Filesystem
-     * @param \Core\IEnvironment $env             Environment
-     * @param TemplateFactory    $templateFactory Template factory
+     * @param \Core\IFilesystem               $filesystem      Filesystem
+     * @param \Core\IEnvironment              $env             Environment
+     * @param \Bundle\Module\ITemplateFactory $templateFactory Template factory
      *
      * @return void
      */
@@ -73,11 +73,41 @@ class Creator
      */
     public function create(\Core\Module $module)
     {
-        $configPath = "{$this->_env->getWorkingDir()}/app/code/local/" . 
-                      "{$module->getCompany()}/{$module->getName()}/etc/config.xml";
-        $this->_fs->mkdir(dirname($configPath));
+        $this->_createModuleConfig($module);
+        $this->_createModuleGlobalConfig($module);
+    }
+
+    /**
+     * Create module global config 
+     * 
+     * @param \Core\Module $module Module
+     *
+     * @return void
+     */
+    private function _createModuleGlobalConfig(\Core\Module $module)
+    {
+        $path = "{$this->_env->getWorkingDir()}/app/etc/modules/" . 
+                "{$module->getCompany()}_{$module->getName()}.xml";
         $this->_fs->write(
-            $configPath,
+            $path,
+            $this->_templateFactory->getModuleGlobalConfig()->parse()
+        );
+    }
+
+    /**
+     * Create module config 
+     * 
+     * @param \Core\Module $module Module
+     *
+     * @return void
+     */
+    private function _createModuleConfig(\Core\Module $module)
+    {
+        $path = "{$this->_env->getWorkingDir()}/app/code/local/" . 
+                "{$module->getCompany()}/{$module->getName()}/etc/config.xml";
+        $this->_fs->mkdir(dirname($path));
+        $this->_fs->write(
+            $path,
             $this->_templateFactory->getModuleConfig()->parse()
         );
     }

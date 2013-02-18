@@ -79,9 +79,10 @@ class CreatorTest extends \PHPUnit_Framework_TestCase
         $filesystem->expects($this->once())->method('mkdir')
             ->with($this->equalTo('/foo/bar/app/code/local/MyCompany/MyModule/etc'));
 
-
         $templateFactory = $this->getMock('\Bundle\Module\ITemplateFactory');
         $templateFactory->expects($this->any())->method('getModuleConfig')
+            ->will($this->returnValue($this->getMock('\Core\ITemplate')));
+        $templateFactory->expects($this->any())->method('getModuleGlobalConfig')
             ->will($this->returnValue($this->getMock('\Core\ITemplate')));
 
         $creator = new Creator($filesystem, $env, $templateFactory);
@@ -105,10 +106,42 @@ class CreatorTest extends \PHPUnit_Framework_TestCase
         $templateFactory = $this->getMock('\Bundle\Module\ITemplateFactory');
         $templateFactory->expects($this->any())->method('getModuleConfig')
             ->will($this->returnValue($template));
+        $templateFactory->expects($this->any())->method('getModuleGlobalConfig')
+            ->will($this->returnValue($this->getMock('\Core\ITemplate')));
 
         $filesystem = $this->getMock('\Core\IFilesystem');
-        $filesystem->expects($this->once())->method('write')->with(
+        $filesystem->expects($this->at(1))->method('write')->with(
             $this->equalTo('/foo/bar/app/code/local/MyCompany/MyModule/etc/config.xml'),
+            $this->equalTo('content')
+        );
+
+        $creator = new Creator($filesystem, $env, $templateFactory);
+        $creator->create($module);
+    }
+
+    /**
+     * Create writes parsed template content to module global config file
+     * 
+     * @return void
+     * @test
+     */
+    public function createWritesParsedTemplateContentToModuleGlobalConfigFile()
+    {
+        $module = $this->_mockModule('MyCompany', 'MyModule');
+        $env = $this->_mockEnvironment('/foo/bar');
+
+        $template = $this->getMock('\Core\ITemplate');
+        $template->expects($this->any())->method('parse')
+            ->will($this->returnValue('content'));
+        $templateFactory = $this->getMock('\Bundle\Module\ITemplateFactory');
+        $templateFactory->expects($this->any())->method('getModuleGlobalConfig')
+            ->will($this->returnValue($template));
+        $templateFactory->expects($this->any())->method('getModuleConfig')
+            ->will($this->returnValue($this->getMock('\Core\ITemplate')));
+
+        $filesystem = $this->getMock('\Core\IFilesystem');
+        $filesystem->expects($this->at(2))->method('write')->with(
+            $this->equalTo('/foo/bar/app/etc/modules/MyCompany_MyModule.xml'),
             $this->equalTo('content')
         );
 
