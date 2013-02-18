@@ -73,11 +73,11 @@ class CreatorTest extends \PHPUnit_Framework_TestCase
     public function createAddsModuleEtcDirectoryToLocalPool()
     {
         $module = $this->_mockModule('MyCompany', 'MyModule');
-        $env = $this->_mockEnvironment('/foo/bar');
+        $env = $this->_mockEnvironment('/root');
 
         $filesystem = $this->getMock('\Core\IFilesystem');
         $filesystem->expects($this->once())->method('mkdir')
-            ->with($this->equalTo('/foo/bar/app/code/local/MyCompany/MyModule/etc'));
+            ->with($this->equalTo('/root/app/code/local/MyCompany/MyModule/etc'));
 
         $templateFactory = $this->getMock('\Bundle\Module\ITemplateFactory');
         $templateFactory->expects($this->any())->method('getModuleConfig')
@@ -98,7 +98,7 @@ class CreatorTest extends \PHPUnit_Framework_TestCase
     public function createWritesParsedTemplateContentToModuleConfigFile()
     {
         $module = $this->_mockModule('MyCompany', 'MyModule');
-        $env = $this->_mockEnvironment('/foo/bar');
+        $env = $this->_mockEnvironment('/root');
 
         $template = $this->getMock('\Core\ITemplate');
         $template->expects($this->any())->method('parse')
@@ -111,7 +111,7 @@ class CreatorTest extends \PHPUnit_Framework_TestCase
 
         $filesystem = $this->getMock('\Core\IFilesystem');
         $filesystem->expects($this->at(1))->method('write')->with(
-            $this->equalTo('/foo/bar/app/code/local/MyCompany/MyModule/etc/config.xml'),
+            $this->equalTo('/root/app/code/local/MyCompany/MyModule/etc/config.xml'),
             $this->equalTo('content')
         );
 
@@ -128,7 +128,7 @@ class CreatorTest extends \PHPUnit_Framework_TestCase
     public function createWritesParsedTemplateContentToModuleGlobalConfigFile()
     {
         $module = $this->_mockModule('MyCompany', 'MyModule');
-        $env = $this->_mockEnvironment('/foo/bar');
+        $env = $this->_mockEnvironment('/root');
 
         $template = $this->getMock('\Core\ITemplate');
         $template->expects($this->any())->method('parse')
@@ -141,7 +141,7 @@ class CreatorTest extends \PHPUnit_Framework_TestCase
 
         $filesystem = $this->getMock('\Core\IFilesystem');
         $filesystem->expects($this->at(2))->method('write')->with(
-            $this->equalTo('/foo/bar/app/etc/modules/MyCompany_MyModule.xml'),
+            $this->equalTo('/root/app/etc/modules/MyCompany_MyModule.xml'),
             $this->equalTo('content')
         );
 
