@@ -48,15 +48,20 @@ class Creator
     /**
      * Init the creator 
      * 
-     * @param \Core\IFilesystem  $filesystem Filesystem
-     * @param \Core\IEnvironment $env        Environment
+     * @param \Core\IFilesystem  $filesystem      Filesystem
+     * @param \Core\IEnvironment $env             Environment
+     * @param TemplateFactory    $templateFactory Template factory
      *
      * @return void
      */
-    public function __construct(\Core\IFilesystem $filesystem, \Core\IEnvironment $env)
-    {
+    public function __construct(
+        \Core\IFilesystem $filesystem,
+        \Core\IEnvironment $env,
+        ITemplateFactory $templateFactory
+    ) {
         $this->_fs = $filesystem;
         $this->_env = $env;
+        $this->_templateFactory = $templateFactory;
     }
 
     /**
@@ -68,8 +73,12 @@ class Creator
      */
     public function create(\Core\Module $module)
     {
-        $this->_fs->mkdir(
-            "{$this->_env->getWorkingDir()}/app/code/local/{$module->getCompany()}/{$module->getName()}/etc"
+        $configPath = "{$this->_env->getWorkingDir()}/app/code/local/" . 
+                      "{$module->getCompany()}/{$module->getName()}/etc/config.xml";
+        $this->_fs->mkdir(dirname($configPath));
+        $this->_fs->write(
+            $configPath,
+            $this->_templateFactory->getModuleConfig()->parse()
         );
     }
 }

@@ -11,7 +11,7 @@
  * http://opensource.org/licenses/osl-3.0.php
  *
  * @category  Core
- * @package   Filesystem
+ * @package   Template
  * @author    Daniel Kocherga <dan.kocherga@gmail.com>
  * @copyright 2013 Daniel Kocherga (dan.kocherga@gmail.com)
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -24,29 +24,17 @@ namespace Core;
  * Filesystem interface
  *
  * @category Core
- * @package  Filesystem
+ * @package  Template
  * @author   Daniel Kocherga <dan@oggettoweb.com>
  * @license  http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link     https://github.com/dankocherga/MTool
  */
-interface IFilesystem
+interface ITemplate
 {
     /**
-     * Create directory recursive 
+     * Parse the template 
      * 
-     * @param string $path Path
-     *
-     * @return void
+     * @return string
      */
-    public function mkdir($path);
-
-    /**
-     * Write data to file
-     * 
-     * @param string $path    Path
-     * @param string $content Content
-     *
-     * @return void
-     */
-    public function write($path, $content);
+    public function parse();
 }

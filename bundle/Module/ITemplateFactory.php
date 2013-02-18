@@ -10,43 +10,31 @@
  * that is available through the world-wide-web at this URL:
  * http://opensource.org/licenses/osl-3.0.php
  *
- * @category  Core
- * @package   Filesystem
+ * @category  Bundle
+ * @package   Module
  * @author    Daniel Kocherga <dan.kocherga@gmail.com>
  * @copyright 2013 Daniel Kocherga (dan.kocherga@gmail.com)
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      https://github.com/dankocherga/MTool
  */
 
-namespace Core;
+namespace Bundle\Module;
 
 /**
- * Filesystem interface
+ * Module creator template factory interface
  *
- * @category Core
- * @package  Filesystem
+ * @category Bundle
+ * @package  Module
  * @author   Daniel Kocherga <dan@oggettoweb.com>
  * @license  http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link     https://github.com/dankocherga/MTool
  */
-interface IFilesystem
+interface ITemplateFactory
 {
     /**
-     * Create directory recursive 
+     * Get module config template
      * 
-     * @param string $path Path
-     *
-     * @return void
+     * @return \Core\ITemplate
      */
-    public function mkdir($path);
-
-    /**
-     * Write data to file
-     * 
-     * @param string $path    Path
-     * @param string $content Content
-     *
-     * @return void
-     */
-    public function write($path, $content);
+    public function getModuleConfig();
 }

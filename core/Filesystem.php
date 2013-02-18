@@ -46,4 +46,16 @@ class Filesystem implements IFilesystem
             throw new Filesystem\Exception("Cannot create directory '{$preparedPath}'");
         }
     }
+
+    /**
+     * Write data to file
+     * 
+     * @param string $path    Path
+     * @param string $content Content
+     *
+     * @return void
+     */
+    public function write($path, $content)
+    {
+    }
 }
