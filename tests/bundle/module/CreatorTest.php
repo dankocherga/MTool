@@ -41,7 +41,9 @@ class CreatorTest extends \PHPUnit_Framework_TestCase
      */
     private function _mockModule($company, $name)
     {
-        $module = $this->getMock('\Core\Module');
+        $module = $this->getMockBuilder('\Core\Module')
+            ->disableOriginalConstructor()
+            ->getMock();
         $module->expects($this->any())->method('getCompany')
             ->will($this->returnValue($company));
         $module->expects($this->any())->method('getName')

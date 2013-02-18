@@ -41,8 +41,7 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
      */
     public function storesCompanyName()
     {
-        $module = new Module;
-        $module->setCompany('foo');
+        $module = new Module('foo', 'bar');
         $this->assertEquals('foo', $module->getCompany());
     }
 
@@ -54,8 +53,7 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
      */
     public function storesModuleName()
     {
-        $module = new Module;
-        $module->setName('foo');
-        $this->assertEquals('foo', $module->getName());
+        $module = new Module('foo', 'bar');
+        $this->assertEquals('bar', $module->getName());
     }
 }

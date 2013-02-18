@@ -46,15 +46,17 @@ class Module
     private $_name;
 
     /**
-     * Set company name
+     * Init the module
      * 
-     * @param string $company Name
+     * @param string $company Company name
+     * @param string $name    Module name
      *
      * @return void
      */
-    public function setCompany($company)
+    public function __construct($company, $name)
     {
         $this->_company = $company;
+        $this->_name = $name;
     }
 
     /**
@@ -65,18 +67,6 @@ class Module
     public function getCompany()
     {
         return $this->_company;
-    }
-    
-    /**
-     * Set module name 
-     * 
-     * @param string $name Name
-     *
-     * @return void
-     */
-    public function setName($name)
-    {
-        $this->_name = $name;
     }
 
     /**
