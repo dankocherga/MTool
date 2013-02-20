@@ -19,6 +19,7 @@
  */
 
 namespace Bundle\Module;
+use \Core\Storage\IStorage;
 
 /**
  * Module creator
@@ -32,11 +33,11 @@ namespace Bundle\Module;
 class Creator
 {
     /**
-     * Filesystem 
+     * Storage 
      * 
-     * @var \Core\IFilesystem
+     * @var \Core\Storage\IStorage
      */
-    private $_fs;
+    private $_storage;
 
     /**
      * Environment
@@ -48,18 +49,18 @@ class Creator
     /**
      * Init the creator 
      * 
-     * @param \Core\IFilesystem               $filesystem      Filesystem
+     * @param IStorage                        $storage         Storage
      * @param \Core\IEnvironment              $env             Environment
      * @param \Bundle\Module\ITemplateFactory $templateFactory Template factory
      *
      * @return void
      */
     public function __construct(
-        \Core\IFilesystem $filesystem,
+        IStorage $storage,
         \Core\IEnvironment $env,
         ITemplateFactory $templateFactory
     ) {
-        $this->_fs = $filesystem;
+        $this->_storage = $storage;
         $this->_env = $env;
         $this->_templateFactory = $templateFactory;
     }
@@ -88,7 +89,7 @@ class Creator
     {
         $path = "{$this->_env->getWorkingDir()}/app/etc/modules/" . 
                 "{$module->getCompany()}_{$module->getName()}.xml";
-        $this->_fs->write(
+        $this->_storage->write(
             $path,
             $this->_templateFactory->getModuleGlobalConfig()->parse()
         );
@@ -105,8 +106,8 @@ class Creator
     {
         $path = "{$this->_env->getWorkingDir()}/app/code/local/" . 
                 "{$module->getCompany()}/{$module->getName()}/etc/config.xml";
-        $this->_fs->mkdir(dirname($path));
-        $this->_fs->write(
+        $this->_storage->mkdir(dirname($path));
+        $this->_storage->write(
             $path,
             $this->_templateFactory->getModuleConfig()->parse()
         );

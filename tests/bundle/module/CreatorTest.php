@@ -77,7 +77,7 @@ class CreatorTest extends \PHPUnit_Framework_TestCase
         $module = $this->_mockModule('MyCompany', 'MyModule');
         $env = $this->_mockEnvironment('/root');
 
-        $filesystem = $this->getMock('\Core\IFilesystem');
+        $filesystem = $this->getMock('\Core\Storage\IStorage');
         $filesystem->expects($this->once())->method('mkdir')
             ->with($this->equalTo('/root/app/code/local/MyCompany/MyModule/etc'));
 
@@ -111,7 +111,7 @@ class CreatorTest extends \PHPUnit_Framework_TestCase
         $templateFactory->expects($this->any())->method('getModuleGlobalConfig')
             ->will($this->returnValue($this->getMock('\Core\ITemplate')));
 
-        $filesystem = $this->getMock('\Core\IFilesystem');
+        $filesystem = $this->getMock('\Core\Storage\IStorage');
         $filesystem->expects($this->at(1))->method('write')->with(
             $this->equalTo('/root/app/code/local/MyCompany/MyModule/etc/config.xml'),
             $this->equalTo('content')
@@ -141,7 +141,7 @@ class CreatorTest extends \PHPUnit_Framework_TestCase
         $templateFactory->expects($this->any())->method('getModuleConfig')
             ->will($this->returnValue($this->getMock('\Core\ITemplate')));
 
-        $filesystem = $this->getMock('\Core\IFilesystem');
+        $filesystem = $this->getMock('\Core\Storage\IStorage');
         $filesystem->expects($this->at(2))->method('write')->with(
             $this->equalTo('/root/app/etc/modules/MyCompany_MyModule.xml'),
             $this->equalTo('content')

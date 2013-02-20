@@ -18,7 +18,7 @@
  * @link      https://github.com/dankocherga/MTool
  */
 
-namespace Core;
+namespace Core\Storage;
 use org\bovigo\vfs\vfsStream;
 
 /**
@@ -98,7 +98,7 @@ class FilesystemTest extends \PHPUnit_Framework_TestCase
         try {
             $this->_fs->mkdir(vfsStream::url('root/foo/bar'));
             $this->fail('Excepected exception has not been thrown.');
-        } catch (Filesystem\Exception $e) {
+        } catch (Exception $e) {
             $this->assertContains('Cannot create directory', $e->getMessage());
         }
     }
