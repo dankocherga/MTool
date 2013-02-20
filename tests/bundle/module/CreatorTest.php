@@ -83,9 +83,9 @@ class CreatorTest extends \PHPUnit_Framework_TestCase
 
         $templateFactory = $this->getMock('\Bundle\Module\ITemplateFactory');
         $templateFactory->expects($this->any())->method('getModuleConfig')
-            ->will($this->returnValue($this->getMock('\Core\ITemplate')));
+            ->will($this->returnValue($this->getMock('\Core\Template\ITemplate')));
         $templateFactory->expects($this->any())->method('getModuleGlobalConfig')
-            ->will($this->returnValue($this->getMock('\Core\ITemplate')));
+            ->will($this->returnValue($this->getMock('\Core\Template\ITemplate')));
 
         $creator = new Creator($filesystem, $env, $templateFactory);
         $creator->create($module);
@@ -102,14 +102,14 @@ class CreatorTest extends \PHPUnit_Framework_TestCase
         $module = $this->_mockModule('MyCompany', 'MyModule');
         $env = $this->_mockEnvironment('/root');
 
-        $template = $this->getMock('\Core\ITemplate');
+        $template = $this->getMock('\Core\Template\ITemplate');
         $template->expects($this->any())->method('parse')
             ->will($this->returnValue('content'));
         $templateFactory = $this->getMock('\Bundle\Module\ITemplateFactory');
         $templateFactory->expects($this->any())->method('getModuleConfig')
             ->will($this->returnValue($template));
         $templateFactory->expects($this->any())->method('getModuleGlobalConfig')
-            ->will($this->returnValue($this->getMock('\Core\ITemplate')));
+            ->will($this->returnValue($this->getMock('\Core\Template\ITemplate')));
 
         $filesystem = $this->getMock('\Core\Storage\IStorage');
         $filesystem->expects($this->at(1))->method('write')->with(
@@ -132,14 +132,14 @@ class CreatorTest extends \PHPUnit_Framework_TestCase
         $module = $this->_mockModule('MyCompany', 'MyModule');
         $env = $this->_mockEnvironment('/root');
 
-        $template = $this->getMock('\Core\ITemplate');
+        $template = $this->getMock('\Core\Template\ITemplate');
         $template->expects($this->any())->method('parse')
             ->will($this->returnValue('content'));
         $templateFactory = $this->getMock('\Bundle\Module\ITemplateFactory');
         $templateFactory->expects($this->any())->method('getModuleGlobalConfig')
             ->will($this->returnValue($template));
         $templateFactory->expects($this->any())->method('getModuleConfig')
-            ->will($this->returnValue($this->getMock('\Core\ITemplate')));
+            ->will($this->returnValue($this->getMock('\Core\Template\ITemplate')));
 
         $filesystem = $this->getMock('\Core\Storage\IStorage');
         $filesystem->expects($this->at(2))->method('write')->with(

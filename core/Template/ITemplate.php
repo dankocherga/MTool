@@ -18,7 +18,7 @@
  * @link      https://github.com/dankocherga/MTool
  */
 
-namespace Core;
+namespace Core\Template;
 
 /**
  * Filesystem interface
