@@ -21,6 +21,7 @@
 namespace Bundle\Module;
 use \Core\Storage\IStorage;
 use \Core\Environment\IEnvironment;
+use \Core\Module;
 
 /**
  * Module creator
@@ -69,11 +70,11 @@ class Creator
     /**
      * Create module 
      * 
-     * @param \Core\Module $module Module
+     * @param Module $module Module
      *
      * @return void
      */
-    public function create(\Core\Module $module)
+    public function create(Module $module)
     {
         $this->_createModuleConfig($module);
         $this->_createModuleGlobalConfig($module);
@@ -82,35 +83,33 @@ class Creator
     /**
      * Create module global config 
      * 
-     * @param \Core\Module $module Module
+     * @param Module $module Module
      *
      * @return void
      */
-    private function _createModuleGlobalConfig(\Core\Module $module)
+    private function _createModuleGlobalConfig(Module $module)
     {
         $path = "{$this->_env->getWorkingDir()}/app/etc/modules/" . 
                 "{$module->getCompany()}_{$module->getName()}.xml";
         $this->_storage->write(
-            $path,
-            $this->_templateFactory->getModuleGlobalConfig()->parse()
+            $path, $this->_templateFactory->getModuleGlobalConfig()->parse()
         );
     }
 
     /**
      * Create module config 
      * 
-     * @param \Core\Module $module Module
+     * @param Module $module Module
      *
      * @return void
      */
-    private function _createModuleConfig(\Core\Module $module)
+    private function _createModuleConfig(Module $module)
     {
         $path = "{$this->_env->getWorkingDir()}/app/code/local/" . 
                 "{$module->getCompany()}/{$module->getName()}/etc/config.xml";
         $this->_storage->mkdir(dirname($path));
         $this->_storage->write(
-            $path,
-            $this->_templateFactory->getModuleConfig()->parse()
+            $path, $this->_templateFactory->getModuleConfig()->parse()
         );
     }
 }
