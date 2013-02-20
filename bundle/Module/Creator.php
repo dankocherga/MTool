@@ -20,6 +20,7 @@
 
 namespace Bundle\Module;
 use \Core\Storage\IStorage;
+use \Core\Environment\IEnvironment;
 
 /**
  * Module creator
@@ -35,29 +36,29 @@ class Creator
     /**
      * Storage 
      * 
-     * @var \Core\Storage\IStorage
+     * @var IStorage
      */
     private $_storage;
 
     /**
      * Environment
      *
-     * @var \Core\IEnvironment
+     * @var IEnvironment
      */
     private $_env;
 
     /**
      * Init the creator 
      * 
-     * @param IStorage                        $storage         Storage
-     * @param \Core\IEnvironment              $env             Environment
-     * @param \Bundle\Module\ITemplateFactory $templateFactory Template factory
+     * @param IStorage         $storage         Storage
+     * @param IEnvironment     $env             Environment
+     * @param ITemplateFactory $templateFactory Template factory
      *
      * @return void
      */
     public function __construct(
         IStorage $storage,
-        \Core\IEnvironment $env,
+        IEnvironment $env,
         ITemplateFactory $templateFactory
     ) {
         $this->_storage = $storage;

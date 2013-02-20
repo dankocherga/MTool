@@ -56,11 +56,11 @@ class CreatorTest extends \PHPUnit_Framework_TestCase
      * 
      * @param string $workingDir Working dir
      *
-     * @return \Core\IEnvironment
+     * @return \Core\Environment\IEnvironment
      */
     private function _mockEnvironment($workingDir)
     {
-        $env = $this->getMock('\Core\IEnvironment');
+        $env = $this->getMock('\Core\Environment\IEnvironment');
         $env->expects($this->any())->method('getWorkingDir')
             ->will($this->returnValue($workingDir));
         return $env;

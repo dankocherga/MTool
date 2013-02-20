@@ -10,36 +10,31 @@
  * that is available through the world-wide-web at this URL:
  * http://opensource.org/licenses/osl-3.0.php
  *
- * @category  Tests
- * @package   Core
+ * @category  Core
+ * @package   Environment
  * @author    Daniel Kocherga <dan.kocherga@gmail.com>
  * @copyright 2013 Daniel Kocherga (dan.kocherga@gmail.com)
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      https://github.com/dankocherga/MTool
  */
 
-namespace Core;
+namespace Core\Environment;
 
 /**
- * Execution environment test case
+ * Environment interface
  *
- * @category Tests
- * @package  Core
+ * @category Core
+ * @package  Environment
  * @author   Daniel Kocherga <dan@oggettoweb.com>
  * @license  http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link     https://github.com/dankocherga/MTool
  */
-class ExecutionEnvironmentTest extends \PHPUnit_Framework_TestCase
+interface IEnvironment
 {
     /**
-     * Returns current dir as working dir 
+     * Get working dir 
      * 
-     * @return void
-     * @test
+     * @return string
      */
-    public function returnsCurrentDirAsWorkingDir()
-    {
-        $env = new ExecutionEnvironment;
-        $this->assertEquals(getcwd(), $env->getWorkingDir());
-    }
+    public function getWorkingDir();
 }
