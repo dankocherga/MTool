@@ -82,7 +82,10 @@ class FilesystemTest extends \PHPUnit_Framework_TestCase
         $this->_fs->mkdir(vfsStream::url('root/foo'));
         $dir = $this->_root->getChild('foo');
 
-        $this->assertEquals(0755, $dir->getPermissions());
+        $this->assertEquals(
+            0755, $dir->getPermissions(),
+            'Actual: ' . decoct($dir->getPermissions())
+        );
     }
 
     /**
@@ -100,6 +103,50 @@ class FilesystemTest extends \PHPUnit_Framework_TestCase
             $this->fail('Excepected exception has not been thrown.');
         } catch (Exception $e) {
             $this->assertContains('Cannot create directory', $e->getMessage());
+        }
+    }
+
+    /**
+     * Write creates file 
+     * 
+     * @return void
+     * @test
+     */
+    public function writeCreatesFile()
+    {
+        $this->_fs->write(vfsStream::url('root/file.txt'), 'foo');
+        $this->assertTrue($this->_root->hasChild('file.txt'));
+    }
+
+    /**
+     * Write puts content into file 
+     * 
+     * @return void
+     * @test
+     */
+    public function writePutsContentIntoFile()
+    {
+        $this->_fs->write(vfsStream::url('root/file.txt'), 'foo');
+        $this->assertEquals('foo', $this->_root->getChild('file.txt')->getContent());
+    }
+
+    /**
+     * Write sets read permissions to file 
+     * 
+     * @return void
+     * @test
+     */
+    public function writeSetsReadPermissionsToFile()
+    {
+        // This test cannot run on PHP < 5.4 since it does
+        // not support chmod() on stream wrappers
+        if (version_compare(PHP_VERSION, '5.4.0') >= 0) {
+            $this->_fs->write(vfsStream::url('root/file.txt'), 'foo');
+            $file = $this->_root->getChild('file.txt');
+            $this->assertEquals(
+                0644, $file->getPermissions(),
+                'Actual: ' . decoct($file->getPermissions())
+            );
         }
     }
 }
