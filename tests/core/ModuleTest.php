@@ -20,8 +20,6 @@
 
 namespace Core;
 
-require_once 'core/Module.php';
-
 /**
  * Module creator test case
  *
