@@ -69,7 +69,7 @@ class TwigTemplateTest extends \PHPUnit_Framework_TestCase
      * @return void
      * @test
      */
-    public function parsesObjectMethods()
+    public function parsesParameterObjectMethods()
     {
         $person = $this->getMock('stdClass', array('getName'));
         $person->expects($this->any())->method('getName')
