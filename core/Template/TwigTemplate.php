@@ -21,7 +21,7 @@
 namespace Core\Template;
 
 /**
- * Template interface
+ * Twig-based template
  *
  * @category Core
  * @package  Template
@@ -29,30 +29,73 @@ namespace Core\Template;
  * @license  http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link     https://github.com/dankocherga/MTool
  */
-interface ITemplate
+class TwigTemplate implements ITemplate
 {
+    /**
+     * Content 
+     * 
+     * @var string
+     */
+    private $_content;
+
+    /**
+     * Params 
+     * 
+     * @var mixed
+     */
+    private $_params;
+
+    /**
+     * Twig instance
+     * 
+     * @var \Twig_Environment
+     */
+    private $_twig;
+
+    /**
+     * Init the template
+     * 
+     * @return void
+     */
+    public function __construct()
+    {
+        $loader = new \Twig_Loader_String();
+        $this->_twig = new \Twig_Environment($loader);
+    }
+
     /**
      * Parse the template 
      * 
      * @return string
      */
-    public function parse();
+    public function parse()
+    {
+        return $this->_twig->render($this->_content, $this->_params);
+    }
 
     /**
      * Set content 
      * 
      * @param string $content Content
      *
-     * @return ITemplate
+     * @return TwigTemplate
      */
-    public function setContent($content);
+    public function setContent($content)
+    {
+        $this->_content = $content;
+        return $this;
+    }
 
     /**
      * Set params 
      * 
      * @param array $params Params
      *
-     * @return ITemplate
+     * @return TwigTemplate
      */
-    public function setParams(array $params);
+    public function setParams(array $params)
+    {
+        $this->_params = $params;
+        return $this;
+    }
 }
