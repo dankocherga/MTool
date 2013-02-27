@@ -49,4 +49,13 @@ interface IStorage
      * @return void
      */
     public function write($path, $content);
+
+    /**
+     * Read 
+     * 
+     * @param string $path Path
+     *
+     * @return string
+     */
+    public function read($path);
 }

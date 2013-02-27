@@ -63,4 +63,15 @@ class Filesystem implements IStorage
 
         @chmod($path, 0644);
     }
+
+    /**
+     * Read 
+     * 
+     * @param string $path Path
+     *
+     * @return string
+     */
+    public function read($path)
+    {
+    }
 }

@@ -10,8 +10,8 @@
  * that is available through the world-wide-web at this URL:
  * http://opensource.org/licenses/osl-3.0.php
  *
- * @category  Core
- * @package   Template
+ * @category  Tests
+ * @package   Core
  * @author    Daniel Kocherga <dan.kocherga@gmail.com>
  * @copyright 2013 Daniel Kocherga (dan.kocherga@gmail.com)
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -21,22 +21,30 @@
 namespace Core\Template;
 
 /**
- * Template loader interface
+ * Storage template loader test case
  *
- * @category Core
- * @package  Template
+ * @category Tests
+ * @package  Core
  * @author   Daniel Kocherga <dan@oggettoweb.com>
  * @license  http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link     https://github.com/dankocherga/MTool
  */
-interface ITemplateLoader
+class StorageTemplateLoaderTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Load template content
+     * Load reads content from storage 
      * 
-     * @param string $templateName Template name
-     *
-     * @return string
+     * @return void
+     * @test
      */
-    public function load($templateName);
+    public function loadReadsContentFromStorage()
+    {
+        $storage = $this->getMock('\Core\Storage\IStorage');
+        $storage->expects($this->once())->method('read')
+            ->with($this->equalTo('/foo/bar/template_name.tpl'))
+            ->will($this->returnValue('content'));
+        $loader = new StorageTemplateLoader($storage, '/foo/bar');
+
+        $this->assertEquals('content', $loader->load('template_name'));
+    }
 }
