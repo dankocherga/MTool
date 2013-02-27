@@ -149,4 +149,21 @@ class FilesystemTest extends \PHPUnit_Framework_TestCase
             );
         }
     }
+
+    /**
+     * Test read gets content from file 
+     * 
+     * @return void
+     */
+    public function testReadGetsContentFromFile()
+    {
+        vfsStream::newFile('foo.txt')
+            ->withContent('content')
+            ->at($this->_root);
+
+        $this->assertEquals(
+            'content',
+            $this->_fs->read(vfsStream::url('root/foo.txt'))
+        );
+    }
 }
