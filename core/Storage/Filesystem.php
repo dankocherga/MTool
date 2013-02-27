@@ -57,10 +57,7 @@ class Filesystem implements IStorage
      */
     public function write($path, $content)
     {
-        $file = fopen($path, 'w');
-        fwrite($file, $content);
-        fclose($file);
-
+        file_put_contents($path, $content);
         @chmod($path, 0644);
     }
 
@@ -73,10 +70,6 @@ class Filesystem implements IStorage
      */
     public function read($path)
     {
-        $file = fopen($path, 'r');
-        $content = fread($file, filesize($path));
-        fclose($file);
-
-        return $content;
+        return file_get_contents($path);
     }
 }
