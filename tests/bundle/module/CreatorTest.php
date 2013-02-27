@@ -81,10 +81,11 @@ class CreatorTest extends \PHPUnit_Framework_TestCase
         $filesystem->expects($this->once())->method('mkdir')
             ->with($this->equalTo('/root/app/code/local/MyCompany/MyModule/etc'));
 
-        $templateFactory = $this->getMock('\Bundle\Module\ITemplateFactory');
-        $templateFactory->expects($this->any())->method('getModuleConfig')
+        $templateFactory = $this->getMockBuilder('\Bundle\Module\TemplateFactory')
+            ->disableOriginalConstructor()->getMock();
+        $templateFactory->expects($this->once())->method('getModuleConfig')
             ->will($this->returnValue($this->getMock('\Core\Template\ITemplate')));
-        $templateFactory->expects($this->any())->method('getModuleGlobalConfig')
+        $templateFactory->expects($this->once())->method('getModuleGlobalConfig')
             ->will($this->returnValue($this->getMock('\Core\Template\ITemplate')));
 
         $creator = new Creator($filesystem, $env, $templateFactory);
@@ -105,8 +106,11 @@ class CreatorTest extends \PHPUnit_Framework_TestCase
         $template = $this->getMock('\Core\Template\ITemplate');
         $template->expects($this->any())->method('parse')
             ->will($this->returnValue('content'));
-        $templateFactory = $this->getMock('\Bundle\Module\ITemplateFactory');
+
+        $templateFactory = $this->getMockBuilder('\Bundle\Module\TemplateFactory')
+            ->disableOriginalConstructor()->getMock();
         $templateFactory->expects($this->any())->method('getModuleConfig')
+            ->with($this->equalTo($module))
             ->will($this->returnValue($template));
         $templateFactory->expects($this->any())->method('getModuleGlobalConfig')
             ->will($this->returnValue($this->getMock('\Core\Template\ITemplate')));
@@ -135,8 +139,10 @@ class CreatorTest extends \PHPUnit_Framework_TestCase
         $template = $this->getMock('\Core\Template\ITemplate');
         $template->expects($this->any())->method('parse')
             ->will($this->returnValue('content'));
-        $templateFactory = $this->getMock('\Bundle\Module\ITemplateFactory');
+        $templateFactory = $this->getMockBuilder('\Bundle\Module\TemplateFactory')
+            ->disableOriginalConstructor()->getMock();
         $templateFactory->expects($this->any())->method('getModuleGlobalConfig')
+            ->with($this->equalTo($module))
             ->will($this->returnValue($template));
         $templateFactory->expects($this->any())->method('getModuleConfig')
             ->will($this->returnValue($this->getMock('\Core\Template\ITemplate')));

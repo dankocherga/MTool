@@ -51,16 +51,16 @@ class Creator
     /**
      * Init the creator 
      * 
-     * @param IStorage         $storage         Storage
-     * @param IEnvironment     $env             Environment
-     * @param ITemplateFactory $templateFactory Template factory
+     * @param IStorage        $storage         Storage
+     * @param IEnvironment    $env             Environment
+     * @param TemplateFactory $templateFactory Template factory
      *
      * @return void
      */
     public function __construct(
         IStorage $storage,
         IEnvironment $env,
-        ITemplateFactory $templateFactory
+        TemplateFactory $templateFactory
     ) {
         $this->_storage = $storage;
         $this->_env = $env;
@@ -92,7 +92,7 @@ class Creator
         $path = "{$this->_env->getWorkingDir()}/app/etc/modules/" . 
                 "{$module->getCompany()}_{$module->getName()}.xml";
         $this->_storage->write(
-            $path, $this->_templateFactory->getModuleGlobalConfig()->parse()
+            $path, $this->_templateFactory->getModuleGlobalConfig($module)->parse()
         );
     }
 
@@ -109,7 +109,7 @@ class Creator
                 "{$module->getCompany()}/{$module->getName()}/etc/config.xml";
         $this->_storage->mkdir(dirname($path));
         $this->_storage->write(
-            $path, $this->_templateFactory->getModuleConfig()->parse()
+            $path, $this->_templateFactory->getModuleConfig($module)->parse()
         );
     }
 }

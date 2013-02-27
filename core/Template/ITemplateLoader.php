@@ -10,38 +10,31 @@
  * that is available through the world-wide-web at this URL:
  * http://opensource.org/licenses/osl-3.0.php
  *
- * @category  Bundle
- * @package   Module
+ * @category  Core
+ * @package   Template
  * @author    Daniel Kocherga <dan.kocherga@gmail.com>
  * @copyright 2013 Daniel Kocherga (dan.kocherga@gmail.com)
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      https://github.com/dankocherga/MTool
  */
 
-namespace Bundle\Module;
+namespace Core\Template;
 
 /**
- * Module creator template factory interface
+ * Template loader interface
  *
- * @category Bundle
- * @package  Module
+ * @category Core
+ * @package  Template
  * @author   Daniel Kocherga <dan@oggettoweb.com>
  * @license  http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link     https://github.com/dankocherga/MTool
  */
-interface ITemplateFactory
+interface ITemplateLoader
 {
     /**
-     * Get module config template
+     * Load template content
      * 
-     * @return \Core\ITemplate
+     * @return string
      */
-    public function getModuleConfig();
-
-    /**
-     * Get module global config template
-     * 
-     * @return \Core\ITemplate
-     */
-    public function getModuleGlobalConfig();
+    public function load();
 }
