@@ -32,26 +32,43 @@ namespace Core;
 class ModuleTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Stores company name 
+     * Module 
+     * 
+     * @var Module
+     */
+    private $_module;
+
+    /**
+     * Set up 
      * 
      * @return void
-     * @test
      */
-    public function storesCompanyName()
+    public function setUp()
     {
-        $module = new Module('foo', 'bar');
-        $this->assertEquals('foo', $module->getCompany());
+        $this->_module = new Module;
     }
 
     /**
-     * Stores module name 
+     * Returns company name uppercased 
      * 
      * @return void
      * @test
      */
-    public function storesModuleName()
+    public function returnsCompanyNameUppercased()
     {
-        $module = new Module('foo', 'bar');
-        $this->assertEquals('bar', $module->getName());
+        $this->_module->init('myFoo', 'bar');
+        $this->assertEquals('MyFoo', $this->_module->getCompany());
+    }
+
+    /**
+     * Returns module name uppercased 
+     * 
+     * @return void
+     * @test
+     */
+    public function returnsModuleNameUppercased()
+    {
+        $this->_module->init('foo', 'myBar');
+        $this->assertEquals('MyBar', $this->_module->getName());
     }
 }

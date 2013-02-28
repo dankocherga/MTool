@@ -33,7 +33,6 @@ class Filesystem implements IStorage
 {
     /**
      * Create directory recursive 
-     * Separate directories with slash(/)
      * 
      * @param string $path Path
      *
@@ -41,9 +40,8 @@ class Filesystem implements IStorage
      */
     public function mkdir($path)
     {
-        $preparedPath = str_replace('/', DIRECTORY_SEPARATOR, $path);
-        if (!mkdir($preparedPath, 0755, true)) {
-            throw new Exception("Cannot create directory '{$preparedPath}'");
+        if (!mkdir($this->_preparePath($path), 0755, true)) {
+            throw new Exception("Cannot create directory '{$path}'");
         }
     }
 
@@ -57,8 +55,8 @@ class Filesystem implements IStorage
      */
     public function write($path, $content)
     {
-        file_put_contents($path, $content);
-        @chmod($path, 0644);
+        file_put_contents($this->_preparePath($path), $content);
+        @chmod($this->_preparePath($path), 0644);
     }
 
     /**
@@ -70,6 +68,18 @@ class Filesystem implements IStorage
      */
     public function read($path)
     {
-        return file_get_contents($path);
+        return file_get_contents($this->_preparePath($path));
+    }
+
+    /**
+     * Prepare path 
+     * 
+     * @param string $path Path
+     *
+     * @return void
+     */
+    private function _preparePath($path)
+    {
+        return str_replace('/', DIRECTORY_SEPARATOR, $path);
     }
 }

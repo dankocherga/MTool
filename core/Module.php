@@ -53,7 +53,7 @@ class Module
      *
      * @return void
      */
-    public function __construct($company, $name)
+    public function init($company, $name)
     {
         $this->_company = $company;
         $this->_name = $name;
@@ -66,7 +66,7 @@ class Module
      */
     public function getCompany()
     {
-        return $this->_company;
+        return ucfirst($this->_company);
     }
 
     /**
@@ -76,6 +76,6 @@ class Module
      */
     public function getName()
     {
-        return $this->_name;
+        return ucfirst($this->_name);
     }
 }

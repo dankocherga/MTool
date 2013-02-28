@@ -1,0 +1,9 @@
+#!/usr/bin/env php
+<?php
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
+
+require_once dirname(dirname(__DIR__)) . '/vendor/autoload.php';
+
+$configPath = __DIR__ . '/config/application_config.php';
+\Zend\Mvc\Application::init(require $configPath)->run();

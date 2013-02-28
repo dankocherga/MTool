@@ -1,15 +1,24 @@
 {
     "require": {
+        "php": ">=5.3.3",
         "phpunit/phpunit": "3.7.*",
         "phpunit/php-invoker": "1.1.*",
         "mikey179/vfsStream": "v1.1.0",
-        "zendframework/zend-loader": "2.0.*",
+        "zendframework/zend-loader": "2.1.*",
+        "zendframework/zend-mvc": "2.1.*",
+        "zendframework/zend-console": "2.1.*",
+        "zendframework/zend-version": "2.1.*",
+        "zendframework/zend-test": "2.1.*",
         "twig/twig": "1.*"
     },
     "repositories": [
         {
             "type": "composer",
             "url": "https://packages.zendframework.com/"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/zendframework/Component_ZendTest"
         }
     ]
 }
