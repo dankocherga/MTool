@@ -33,3 +33,4 @@ try {
 } catch (Exception $e) {
     Mage::logException($e);
 }
+$installer->endSetup();
