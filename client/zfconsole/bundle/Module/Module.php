@@ -76,28 +76,19 @@ class Module implements
     }
 
     /**
-     * Get app root 
-     * 
-     * @return string
-     */
-    public function getAppRoot()
-    {
-        return dirname(dirname(dirname(dirname(__DIR__))));
-    }
-
-    /**
      * Get autoloader config 
      * 
      * @return array
      */
     public function getAutoloaderConfig()
     {
+        $root = dirname(dirname(dirname(dirname(__DIR__))));
         return array(
             'Zend\Loader\StandardAutoloader' => array(
                 'namespaces' => array(
                     'MTool\Client\ZFConsole\Bundle\Module' => __DIR__,
-                    'MTool\Core' => "{$this->getAppRoot()}/core",
-                    'MTool\Bundle' => "{$this->getAppRoot()}/bundle"
+                    'MTool\Core' => "{$root}/core",
+                    'MTool\Bundle' => "{$root}/bundle"
                 ),
             ),
         );
@@ -120,7 +111,7 @@ class Module implements
                 'ModuleCreator' => function () use ($module) {
                     $filesystem = new Filesystem;
                     $templateLoader = new StorageTemplateLoader(
-                        $filesystem, "{$module->getAppRoot()}/bundle/Module/tpl"
+                        $filesystem, __DIR__ . '/tpl'
                     );
                     $templates = new TemplateFactory(new TwigTemplate, $templateLoader);
                     return new ModuleCreator($filesystem, new ExecutionEnvironment, $templates);
