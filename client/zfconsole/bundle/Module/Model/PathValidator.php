@@ -18,8 +18,8 @@
  * @link      https://github.com/dankocherga/MTool
  */
 
-namespace Client\ZFConsole\Bundle\Module\Model;
-use \Client\ZFConsole\Bundle\Module\Exception;
+namespace MTool\Client\ZFConsole\Bundle\Module\Model;
+use MTool\Client\ZFConsole\Bundle\Module\Exception;
 
 /**
  * Path validator

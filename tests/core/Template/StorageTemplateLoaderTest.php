@@ -18,7 +18,7 @@
  * @link      https://github.com/dankocherga/MTool
  */
 
-namespace Core\Template;
+namespace MTool\Core\Template;
 
 /**
  * Storage template loader test case
@@ -39,7 +39,7 @@ class StorageTemplateLoaderTest extends \PHPUnit_Framework_TestCase
      */
     public function loadReadsContentFromStorage()
     {
-        $storage = $this->getMock('\Core\Storage\IStorage');
+        $storage = $this->getMock('\MTool\Core\Storage\IStorage');
         $storage->expects($this->once())->method('read')
             ->with($this->equalTo('/foo/bar/template_name.tpl'))
             ->will($this->returnValue('content'));

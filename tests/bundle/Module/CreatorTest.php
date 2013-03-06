@@ -18,7 +18,7 @@
  * @link      https://github.com/dankocherga/MTool
  */
 
-namespace Bundle\Module;
+namespace MTool\Bundle\Module;
 
 /**
  * Module creator test case
@@ -37,11 +37,11 @@ class CreatorTest extends \PHPUnit_Framework_TestCase
      * @param string $company Company
      * @param string $name    Name
      *
-     * @return \Core\Module
+     * @return \MTool\Core\Module
      */
     private function _mockModule($company, $name)
     {
-        $module = $this->getMockBuilder('\Core\Module')
+        $module = $this->getMockBuilder('\MTool\Core\Module')
             ->disableOriginalConstructor()
             ->getMock();
         $module->expects($this->any())->method('getCompany')
@@ -56,11 +56,11 @@ class CreatorTest extends \PHPUnit_Framework_TestCase
      * 
      * @param string $workingDir Working dir
      *
-     * @return \Core\Environment\IEnvironment
+     * @return \MTool\Core\Environment\IEnvironment
      */
     private function _mockEnvironment($workingDir)
     {
-        $env = $this->getMock('\Core\Environment\IEnvironment');
+        $env = $this->getMock('\MTool\Core\Environment\IEnvironment');
         $env->expects($this->any())->method('getWorkingDir')
             ->will($this->returnValue($workingDir));
         return $env;
@@ -77,16 +77,16 @@ class CreatorTest extends \PHPUnit_Framework_TestCase
         $module = $this->_mockModule('MyCompany', 'MyModule');
         $env = $this->_mockEnvironment('/root');
 
-        $filesystem = $this->getMock('\Core\Storage\IStorage');
+        $filesystem = $this->getMock('\MTool\Core\Storage\IStorage');
         $filesystem->expects($this->once())->method('mkdir')
             ->with($this->equalTo('/root/app/code/local/MyCompany/MyModule/etc'));
 
-        $templateFactory = $this->getMockBuilder('\Bundle\Module\TemplateFactory')
+        $templateFactory = $this->getMockBuilder('\MTool\Bundle\Module\TemplateFactory')
             ->disableOriginalConstructor()->getMock();
         $templateFactory->expects($this->once())->method('getModuleConfig')
-            ->will($this->returnValue($this->getMock('\Core\Template\ITemplate')));
+            ->will($this->returnValue($this->getMock('\MTool\Core\Template\ITemplate')));
         $templateFactory->expects($this->once())->method('getModuleGlobalConfig')
-            ->will($this->returnValue($this->getMock('\Core\Template\ITemplate')));
+            ->will($this->returnValue($this->getMock('\MTool\Core\Template\ITemplate')));
 
         $creator = new Creator($filesystem, $env, $templateFactory);
         $creator->create($module);
@@ -103,19 +103,19 @@ class CreatorTest extends \PHPUnit_Framework_TestCase
         $module = $this->_mockModule('MyCompany', 'MyModule');
         $env = $this->_mockEnvironment('/root');
 
-        $template = $this->getMock('\Core\Template\ITemplate');
+        $template = $this->getMock('\MTool\Core\Template\ITemplate');
         $template->expects($this->any())->method('parse')
             ->will($this->returnValue('content'));
 
-        $templateFactory = $this->getMockBuilder('\Bundle\Module\TemplateFactory')
+        $templateFactory = $this->getMockBuilder('\MTool\Bundle\Module\TemplateFactory')
             ->disableOriginalConstructor()->getMock();
         $templateFactory->expects($this->any())->method('getModuleConfig')
             ->with($this->equalTo($module))
             ->will($this->returnValue($template));
         $templateFactory->expects($this->any())->method('getModuleGlobalConfig')
-            ->will($this->returnValue($this->getMock('\Core\Template\ITemplate')));
+            ->will($this->returnValue($this->getMock('\MTool\Core\Template\ITemplate')));
 
-        $filesystem = $this->getMock('\Core\Storage\IStorage');
+        $filesystem = $this->getMock('\MTool\Core\Storage\IStorage');
         $filesystem->expects($this->at(1))->method('write')->with(
             $this->equalTo('/root/app/code/local/MyCompany/MyModule/etc/config.xml'),
             $this->equalTo('content')
@@ -136,18 +136,18 @@ class CreatorTest extends \PHPUnit_Framework_TestCase
         $module = $this->_mockModule('MyCompany', 'MyModule');
         $env = $this->_mockEnvironment('/root');
 
-        $template = $this->getMock('\Core\Template\ITemplate');
+        $template = $this->getMock('\MTool\Core\Template\ITemplate');
         $template->expects($this->any())->method('parse')
             ->will($this->returnValue('content'));
-        $templateFactory = $this->getMockBuilder('\Bundle\Module\TemplateFactory')
+        $templateFactory = $this->getMockBuilder('\MTool\Bundle\Module\TemplateFactory')
             ->disableOriginalConstructor()->getMock();
         $templateFactory->expects($this->any())->method('getModuleGlobalConfig')
             ->with($this->equalTo($module))
             ->will($this->returnValue($template));
         $templateFactory->expects($this->any())->method('getModuleConfig')
-            ->will($this->returnValue($this->getMock('\Core\Template\ITemplate')));
+            ->will($this->returnValue($this->getMock('\MTool\Core\Template\ITemplate')));
 
-        $filesystem = $this->getMock('\Core\Storage\IStorage');
+        $filesystem = $this->getMock('\MTool\Core\Storage\IStorage');
         $filesystem->expects($this->at(2))->method('write')->with(
             $this->equalTo('/root/app/etc/modules/MyCompany_MyModule.xml'),
             $this->equalTo('content')

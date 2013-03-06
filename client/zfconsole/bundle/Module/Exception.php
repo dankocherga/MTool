@@ -18,7 +18,7 @@
  * @link      https://github.com/dankocherga/MTool
  */
 
-namespace Client\ZFConsole\Bundle\Module;
+namespace MTool\Client\ZFConsole\Bundle\Module;
 
 /**
  * Module exception

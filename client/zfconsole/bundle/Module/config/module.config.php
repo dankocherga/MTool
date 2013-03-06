@@ -36,7 +36,7 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'Module\Controller\Creator' => 'Client\ZFConsole\Bundle\Module\Controller\CreatorController',
+            'Module\Controller\Creator' => 'MTool\Client\ZFConsole\Bundle\Module\Controller\CreatorController',
         ),
     ),
 );

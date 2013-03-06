@@ -18,9 +18,9 @@
  * @link      https://github.com/dankocherga/MTool
  */
 
-namespace Client\ZFConsole\Bundle\Module\Controller;
-use \Zend\Test\PHPUnit\Controller\AbstractConsoleControllerTestCase;
-use \Client\ZFConsole\Bundle\Module\Exception;
+namespace MTool\Client\ZFConsole\Bundle\Module\Controller;
+use Zend\Test\PHPUnit\Controller\AbstractConsoleControllerTestCase;
+use MTool\Client\ZFConsole\Bundle\Module\Exception;
 
 /**
  * Module creator controller test case
@@ -36,14 +36,14 @@ class CreatorControllerTest extends AbstractConsoleControllerTestCase
     /**
      * Creator 
      * 
-     * @var \Bundle\Module\Creator
+     * @var \MTool\Bundle\Module\Creator
      */
     private $_creator;
 
     /**
      * Module 
      * 
-     * @var \Core\Module
+     * @var \MTool\Core\Module
      */
     private $_module;
 
@@ -57,7 +57,7 @@ class CreatorControllerTest extends AbstractConsoleControllerTestCase
     /**
      * Path validator 
      * 
-     * @var \Client\ZFConsole\Bundle\Module\Model\PathValidator
+     * @var \MTool\Client\ZFConsole\Bundle\Module\Model\PathValidator
      */
     private $_pathValidator;
 
@@ -76,11 +76,11 @@ class CreatorControllerTest extends AbstractConsoleControllerTestCase
             include "{$root}/config/application_config.php"
         );
 
-        $this->_moduleCreator = $this->getMockBuilder('\Bundle\Module\Creator')
+        $this->_moduleCreator = $this->getMockBuilder('\MTool\Bundle\Module\Creator')
             ->disableOriginalConstructor(true)->getMock();
-        $this->_module = $this->getMock('\Core\Module');
+        $this->_module = $this->getMock('\MTool\Core\Module');
         $this->_console = $this->getMock('\Zend\Console\Adapter\AdapterInterface');
-        $this->_pathValidator = $this->getMock('\Client\ZFConsole\Bundle\Module\Model\PathValidator');
+        $this->_pathValidator = $this->getMock('\MTool\Client\ZFConsole\Bundle\Module\Model\PathValidator');
 
         $this->getApplicationServiceLocator()
             ->setAllowOverride(true)

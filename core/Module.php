@@ -18,7 +18,7 @@
  * @link      https://github.com/dankocherga/MTool
  */
 
-namespace Core;
+namespace MTool\Core;
 
 /**
  * Module

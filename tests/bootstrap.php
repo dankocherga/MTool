@@ -19,7 +19,7 @@
  */
 $loader = new Zend\Loader\StandardAutoloader(array('autoregister_zf' => true));
 $root = dirname(__DIR__);
-$loader->registerNamespace('Core', "{$root}/core");
-$loader->registerNamespace('Bundle', "{$root}/bundle");
-$loader->registerNamespace('Client\ZFConsole\Bundle', "{$root}/client/zfconsole/bundle");
+$loader->registerNamespace('MTool\Core', "{$root}/core");
+$loader->registerNamespace('MTool\Bundle', "{$root}/bundle");
+$loader->registerNamespace('MTool\Client\ZFConsole\Bundle', "{$root}/client/zfconsole/bundle");
 $loader->register();

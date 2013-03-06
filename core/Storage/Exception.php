@@ -18,7 +18,7 @@
  * @link      https://github.com/dankocherga/MTool
  */
 
-namespace Core\Storage;
+namespace MTool\Core\Storage;
 
 /**
  * File-based filesystem

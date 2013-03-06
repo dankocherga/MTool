@@ -18,7 +18,7 @@
  * @link      https://github.com/dankocherga/MTool
  */
 
-namespace Core\Environment;
+namespace MTool\Core\Environment;
 
 /**
  * Script execution environment

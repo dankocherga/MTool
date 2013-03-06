@@ -18,7 +18,7 @@
  * @link      https://github.com/dankocherga/MTool
  */
 
-namespace Bundle\Module;
+namespace MTool\Bundle\Module;
 
 /**
  * Module template factory test case
@@ -34,21 +34,21 @@ class TemplateFactoryTest extends \PHPUnit_Framework_TestCase
     /**
      * Module 
      * 
-     * @var \Core\Module;
+     * @var \MTool\Core\Module;
      */
     private $_module;
 
     /**
      * Loader 
      * 
-     * @var \Core\Template\ITemplateLoader
+     * @var \MTool\Core\Template\ITemplateLoader
      */
     private $_loader;
 
     /**
      * Template 
      * 
-     * @var \Core\Template\ITemplate
+     * @var \MTool\Core\Template\ITemplate
      */
     private $_template;
 
@@ -66,12 +66,12 @@ class TemplateFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->_module = $this->getMockBuilder('\Core\Module')
+        $this->_module = $this->getMockBuilder('\MTool\Core\Module')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->_loader = $this->getMock('\Core\Template\ITemplateLoader');
-        $this->_template = $this->getMock('\Core\Template\ITemplate');
+        $this->_loader = $this->getMock('\MTool\Core\Template\ITemplateLoader');
+        $this->_template = $this->getMock('\MTool\Core\Template\ITemplate');
         $this->_factory = new TemplateFactory($this->_template, $this->_loader);
     }
 

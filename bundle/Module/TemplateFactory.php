@@ -18,10 +18,10 @@
  * @link      https://github.com/dankocherga/MTool
  */
 
-namespace Bundle\Module;
-use \Core\Template\ITemplate;
-use \Core\Template\ITemplateLoader;
-use \Core\Module;
+namespace MTool\Bundle\Module;
+use MTool\Core\Template\ITemplate;
+use MTool\Core\Template\ITemplateLoader;
+use MTool\Core\Module;
 
 /**
  * Module creator template factory
@@ -83,7 +83,7 @@ class TemplateFactory
      * 
      * @param Module $module Module
      *
-     * @return \Core\Template\ITemplate
+     * @return ITemplate
      */
     public function getModuleGlobalConfig(Module $module)
     {

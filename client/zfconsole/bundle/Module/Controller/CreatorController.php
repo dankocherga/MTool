@@ -18,11 +18,11 @@
  * @link      https://github.com/dankocherga/MTool
  */
 
-namespace Client\ZFConsole\Bundle\Module\Controller;
+namespace MTool\Client\ZFConsole\Bundle\Module\Controller;
 
-use \Zend\Mvc\Controller\AbstractActionController;
-use \Zend\Console\ColorInterface as Color;
-use \Client\ZFConsole\Bundle\Module\Exception;
+use Zend\Mvc\Controller\AbstractActionController;
+use Zend\Console\ColorInterface as Color;
+use MTool\Client\ZFConsole\Bundle\Module\Exception;
 
 /**
  * Module creator controller

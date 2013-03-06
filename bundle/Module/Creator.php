@@ -18,10 +18,10 @@
  * @link      https://github.com/dankocherga/MTool
  */
 
-namespace Bundle\Module;
-use \Core\Storage\IStorage;
-use \Core\Environment\IEnvironment;
-use \Core\Module;
+namespace MTool\Bundle\Module;
+use MTool\Core\Storage\IStorage;
+use MTool\Core\Environment\IEnvironment;
+use MTool\Core\Module;
 
 /**
  * Module creator

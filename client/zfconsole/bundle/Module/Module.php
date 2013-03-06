@@ -26,13 +26,13 @@ use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface; 
 
-use Bundle\Module\Creator as ModuleCreator;
-use Bundle\Module\TemplateFactory;
+use MTool\Bundle\Module\Creator as ModuleCreator;
+use MTool\Bundle\Module\TemplateFactory;
 
-use Core\Storage\Filesystem;
-use Core\Environment\ExecutionEnvironment;
-use Core\Template\TwigTemplate;
-use Core\Template\StorageTemplateLoader;
+use MTool\Core\Storage\Filesystem;
+use MTool\Core\Environment\ExecutionEnvironment;
+use MTool\Core\Template\TwigTemplate;
+use MTool\Core\Template\StorageTemplateLoader;
 
 /**
  * Path validator test case
@@ -95,9 +95,9 @@ class Module implements
         return array(
             'Zend\Loader\StandardAutoloader' => array(
                 'namespaces' => array(
-                    'Client\ZFConsole\Bundle\Module' => __DIR__,
-                    'Core' => "{$this->getAppRoot()}/core",
-                    'Bundle' => "{$this->getAppRoot()}/bundle"
+                    'MTool\Client\ZFConsole\Bundle\Module' => __DIR__,
+                    'MTool\Core' => "{$this->getAppRoot()}/core",
+                    'MTool\Bundle' => "{$this->getAppRoot()}/bundle"
                 ),
             ),
         );
@@ -113,8 +113,8 @@ class Module implements
         $module = $this;
         return array(
             'invokables' => array(
-                'Module\PathValidator' => 'Client\ZFConsole\Bundle\Module\Model\PathValidator',
-                'Module' => 'Core\Module'
+                'Module\PathValidator' => 'MTool\Client\ZFConsole\Bundle\Module\Model\PathValidator',
+                'Module' => 'MTool\Core\Module'
             ),
             'factories' => array(
                 'ModuleCreator' => function () use ($module) {

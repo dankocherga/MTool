@@ -18,7 +18,7 @@
  * @link      https://github.com/dankocherga/MTool
  */
 
-namespace Core\Template;
+namespace MTool\Core\Template;
 
 /**
  * Twig-based template test case

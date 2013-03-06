@@ -18,8 +18,8 @@
  * @link      https://github.com/dankocherga/MTool
  */
 
-namespace Core\Template;
-use \Core\Storage\IStorage;
+namespace MTool\Core\Template;
+use MTool\Core\Storage\IStorage;
 
 /**
  * Storage template loader
