@@ -90,7 +90,20 @@ class Mtool_Magento
      */
     public static function getHomeDir()
     {
-        return $_SERVER['HOME'];
+        return static::isWindows() ? $_SERVER['LOCALAPPDATA'] : $_SERVER['HOME'];
+    }
+    
+    /**
+     * Check if os is windows
+     *
+     * @return bool
+     */
+    public static function isWindows()
+    {
+        return
+            (defined('PHP_OS') && (substr_compare(PHP_OS, 'win', 0, 3, true) === 0)) ||
+            (getenv('OS') != false && substr_compare(getenv('OS'), 'windows', 0, 7, true))
+        ;
     }
 
     /**
